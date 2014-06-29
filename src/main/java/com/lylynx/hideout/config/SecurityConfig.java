@@ -2,30 +2,45 @@ package com.lylynx.hideout.config;
 
 import com.lylynx.hideout.account.AccountRepository;
 import com.lylynx.hideout.account.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.ImportResource;
-import org.springframework.context.annotation.Profile;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.crypto.password.StandardPasswordEncoder;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
-import org.springframework.security.web.util.matcher.RequestMatcher;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.regex.Pattern;
 
 @Configuration
-@ImportResource(value = "classpath:spring-security-context.xml")
-class SecurityConfig {
+@EnableWebMvcSecurity
+class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Bean
-    public UserService userService(AccountRepository accountRepository) {
-        return new UserService(accountRepository);
+    private static final String REMEMBER_ME_KEY = "remember-me-key";
+
+    @Autowired
+    private AccountRepository accountRepository;
+
+    @Override
+    protected void configure(final HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/favicon.ico", "/resources/**", "/", "/signup","/signin*").permitAll()
+                .anyRequest().authenticated()
+                .and().formLogin().loginPage("/signin").failureUrl("/signin?error=1")
+                .and().rememberMe()
+                .rememberMeServices(new TokenBasedRememberMeServices(REMEMBER_ME_KEY, userService())).key(REMEMBER_ME_KEY);
     }
 
+    @Override
+    protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
+        auth.eraseCredentials(true).userDetailsService(userService());
+    }
+
+    // SERVICES
     @Bean
-    public TokenBasedRememberMeServices rememberMeServices(UserService userService) {
-        return new TokenBasedRememberMeServices("remember-me-key", userService);
+    public UserService userService() {
+        return new UserService(accountRepository);
     }
 
     @Bean
@@ -33,38 +48,4 @@ class SecurityConfig {
         return new StandardPasswordEncoder();
     }
 
-    @Profile("test")
-    @Bean(name = "csrfMatcher")
-    public RequestMatcher testCsrfMatcher() {
-        return new RequestMatcher() {
-
-            @Override
-            public boolean matches(HttpServletRequest request) {
-                return false;
-            }
-        };
-    }
-
-    @Profile("!test")
-    @Bean(name = "csrfMatcher")
-    public RequestMatcher csrfMatcher() {
-        /**
-         * Copy of default request matcher from
-         * CsrfFilter$DefaultRequiresCsrfMatcher
-         */
-        return new RequestMatcher() {
-            private Pattern allowedMethods = Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$");
-
-            /*
-             * (non-Javadoc)
-             * 
-             * @see
-             * org.springframework.security.web.util.matcher.RequestMatcher#
-             * matches(javax.servlet.http.HttpServletRequest)
-             */
-            public boolean matches(HttpServletRequest request) {
-                return !allowedMethods.matcher(request.getMethod()).matches();
-            }
-        };
-    }
 }
