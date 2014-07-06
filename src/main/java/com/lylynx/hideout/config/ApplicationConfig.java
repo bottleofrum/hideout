@@ -1,6 +1,7 @@
 package com.lylynx.hideout.config;
 
 import com.lylynx.hideout.account.AccountController;
+import com.lylynx.hideout.error.CustomErrorController;
 import com.lylynx.hideout.account.AccountRepository;
 import com.lylynx.hideout.account.UserService;
 import com.lylynx.hideout.home.HomeController;
@@ -42,6 +43,11 @@ class ApplicationConfig {
     @Bean
     public AccountController accountController(AccountRepository accountRepository) {
         return new AccountController(accountRepository);
+    }
+
+    @Bean
+    public CustomErrorController customErrorController() {
+        return new CustomErrorController();
     }
 
     // SERVICES

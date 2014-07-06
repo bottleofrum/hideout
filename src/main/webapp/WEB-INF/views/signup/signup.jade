@@ -1,0 +1,36 @@
+!!! 5
+html
+    head
+        title Sign in
+        meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
+        link(href="#{url.url('/resources/css/bootstrap.min.css')}", rel="stylesheet", media="screen")
+        link(href="#{url.url('/resources/css/core.css')}", rel="stylesheet", media="screen")
+        script(src="http://code.jquery.com/jquery-latest.js")
+        script(src="#{url.url('/resources/js/bootstrap.min.js')}")
+    body
+        form.form-narrow.form-horizontal(action=url.url('/signup'), method="post")
+            include ../fragments/alert
+            include ../fragments/errors
+            if form.hasErrors('signupForm')
+                +alert('danger', 'Sign up error. Please try again.')
+            fieldset
+                legend Please Sign Up
+                .form-group
+                    label.col-lg-2.control-label(for="inputEmail") Email address
+                    .col-lg-10
+                        input.form-control#inputEmail(name="email", placeholder="Email", type="text",
+                        value=form.value('signupForm', 'email'))
+                        +errors('signupForm', 'email')
+                .form-group
+                    label.col-lg-2.control-label(for="inputPassword") Password
+                    .col-lg-10
+                        input.form-control#inputPassword(name="password", placeholder="Password", type="password")
+                        +errors('signupForm', 'password')
+                .form-group
+                    .col-lg-offset-2.col-lg-10
+                        button.btn.btn-default(type="submit") Sing up
+                input(type="hidden", name=attrs['_csrf'].parameterName, value=attrs['_csrf'].token)
+                .form-group
+                    .col-lg-offset-2.col-lg-10
+                        p Already have an account ?
+                            a(href=url.url('/signin')) Sign in

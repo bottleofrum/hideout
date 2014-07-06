@@ -1,0 +1,12 @@
+!!! 5
+html
+    head
+        title Error page
+        meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
+        link(href="#{url.url('/resources/css/bootstrap.min.css')}", rel="stylesheet", media="screen")
+        link(href="#{url.url('/resources/css/core.css')}", rel="stylesheet", media="screen")
+    body
+        .container
+            include ../fragments/alert
+            +alert('danger', errorMessage)
+            include ../fragments/footer

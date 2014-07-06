@@ -1,0 +1,4 @@
+mixin errors(formName, fieldName)
+    if form.hasErrors(formName, fieldName)
+        each errorMessage in form.errors(formName, fieldName)
+            span.help-block=errorMessage

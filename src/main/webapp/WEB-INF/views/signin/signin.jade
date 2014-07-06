@@ -1,0 +1,38 @@
+!!! 5
+html
+    head
+        title Sign in
+        meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
+        link(href="#{url.url('/resources/css/bootstrap.min.css')}", rel="stylesheet", media="screen")
+        link(href="#{url.url('/resources/css/core.css')}", rel="stylesheet", media="screen")
+        script(src="http://code.jquery.com/jquery-latest.js")
+        script(src="#{url.url('/resources/js/bootstrap.min.js')}")
+    body
+        form.form-narrow.form-horizontal(action=url.url('/signin'), method="post")
+            include ../fragments/alert
+            if params.error != null
+                +alert('danger', 'Sign in error. Please try again.')
+            fieldset
+                legend Please Sign In
+                .form-group
+                    label.col-lg-2.control-label(for="inputEmail") Email
+                    .col-lg-10
+                        input.form-control#inputEmail(name="username", placeholder="Email", type="text")
+                .form-group
+                    label.col-lg-2.control-label(for="inputPassword") Password
+                    .col-lg-10
+                        input.form-control#inputPassword(name="password", placeholder="Password", type="password")
+                input(type="hidden", name=attrs['_csrf'].parameterName, value=attrs['_csrf'].token)
+                .form-group
+                    .col-lg-offset-2.col-lg-10
+                        .checkbox
+                            label
+                                input(type="checkbox", name="_spring_security_remember_me")
+                                span Remember me
+                .form-group
+                    .col-lg-offset-2.col-lg-10
+                        button.btn.btn-default(type="submit") Sing in
+                .form-group
+                    .col-lg-offset-2.col-lg-10
+                        p New here ?
+                            a(href=url.url('/signup')) Sign up

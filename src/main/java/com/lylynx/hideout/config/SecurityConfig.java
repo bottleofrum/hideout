@@ -25,11 +25,12 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/favicon.ico", "/resources/**", "/", "/signup","/signin*").permitAll()
+                .antMatchers("/favicon.ico", "/resources/**", "/", "/signup*", "/signin*","/generalError").permitAll()
                 .anyRequest().authenticated()
                 .and().formLogin().loginPage("/signin").failureUrl("/signin?error=1")
                 .and().rememberMe()
-                .rememberMeServices(new TokenBasedRememberMeServices(REMEMBER_ME_KEY, userService())).key(REMEMBER_ME_KEY);
+                .rememberMeServices(new TokenBasedRememberMeServices(REMEMBER_ME_KEY,
+                        userService())).key(REMEMBER_ME_KEY);
     }
 
     @Override

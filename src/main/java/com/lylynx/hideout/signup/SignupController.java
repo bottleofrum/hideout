@@ -1,9 +1,7 @@
 package com.lylynx.hideout.signup;
 
-import com.lylynx.hideout.account.Account;
 import com.lylynx.hideout.account.AccountRepository;
 import com.lylynx.hideout.account.UserService;
-import com.lylynx.hideout.support.web.MessageHelper;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,13 +38,14 @@ public class SignupController {
 	
 	@RequestMapping(value = "signup", method = RequestMethod.POST)
 	public String signup(@Valid @ModelAttribute SignupForm signupForm, Errors errors, RedirectAttributes ra) {
-		if (errors.hasErrors()) {
+		/*if (errors.hasErrors()) {
 			return SIGNUP_VIEW_NAME;
 		}
 		Account account = accountRepository.save(signupForm.createAccount(passwordEncoder));
 		userService.signin(account);
-        // see /WEB-INF/i18n/messages.properties and /WEB-INF/views/homeSignedIn.html
         MessageHelper.addSuccessAttribute(ra, "signup.success");
-		return "redirect:/";
+		return "redirect:/";*/
+
+        throw new RuntimeException();
 	}
 }

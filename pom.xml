@@ -21,6 +21,7 @@
         <spring.version>4.0.5.RELEASE</spring.version>
         <spring.security.version>3.2.4.RELEASE</spring.security.version>
         <spring.mongo.version>1.5.0.RELEASE</spring.mongo.version>
+        <jade.version>0.4.1-SNAPSHOT</jade.version>
     </properties>
     <repositories>
         <repository>
@@ -107,6 +108,18 @@
             <groupId>org.thymeleaf.extras</groupId>
             <artifactId>thymeleaf-extras-springsecurity3</artifactId>
             <version>${org.thymeleaf.extras.springsecurity3-version}</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>de.neuland-bfi</groupId>
+            <artifactId>jade4j</artifactId>
+            <version>${jade.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.neuland-bfi</groupId>
+            <artifactId>spring-jade4j</artifactId>
+            <version>0.4.0</version>
         </dependency>
         <!-- Spring Data -->
         <dependency>

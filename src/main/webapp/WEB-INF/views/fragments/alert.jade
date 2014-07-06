@@ -1,0 +1,4 @@
+mixin alert(type, message)
+    .alert.alert-dismissable(class="alert-#{type}")
+        button.close(type="button", data-dismiss="alert", aria-hidden="true") &times;
+        span=message
