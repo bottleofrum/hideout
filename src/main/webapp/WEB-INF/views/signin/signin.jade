@@ -12,6 +12,8 @@ html
             include ../fragments/alert
             if params.error != null
                 +alert('danger', 'Sign in error. Please try again.')
+            if params.logout != null
+                +alert('danger', 'You have been logged out.')
             fieldset
                 legend Please Sign In
                 .form-group

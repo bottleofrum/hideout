@@ -1,9 +1,11 @@
 package com.lylynx.hideout.config;
 
 import com.lylynx.hideout.account.AccountController;
-import com.lylynx.hideout.error.CustomErrorController;
 import com.lylynx.hideout.account.AccountRepository;
 import com.lylynx.hideout.account.UserService;
+import com.lylynx.hideout.admin.mvc.AdminConsoleController;
+import com.lylynx.hideout.admin.mvc.PartialsController;
+import com.lylynx.hideout.error.CustomErrorController;
 import com.lylynx.hideout.home.HomeController;
 import com.lylynx.hideout.signin.SigninController;
 import com.lylynx.hideout.signup.SignupController;
@@ -24,6 +26,16 @@ class ApplicationConfig {
     }
 
     // CONTROLLERS
+    @Bean
+    public AdminConsoleController adminConsoleController() {
+        return new AdminConsoleController();
+    }
+
+    @Bean
+    public PartialsController partialsController() {
+        return new PartialsController();
+    }
+
     @Bean
     public HomeController homeController() {
         return new HomeController();

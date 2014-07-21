@@ -20,6 +20,8 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
 
     private static final String RESOURCES_HANDLER = "/resources/";
     private static final String RESOURCES_LOCATION = RESOURCES_HANDLER + "**";
+    private static final String ADMIN_RESOURCES_HANDLER = "/admin/resources/";
+    private static final String ADMIN_RESOURCES_LOCATION = ADMIN_RESOURCES_HANDLER + "**";
 
     @Override
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {
@@ -46,7 +48,8 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler(RESOURCES_HANDLER).addResourceLocations(RESOURCES_LOCATION);
+        registry.addResourceHandler(RESOURCES_HANDLER, ADMIN_RESOURCES_HANDLER)
+                .addResourceLocations(RESOURCES_LOCATION, ADMIN_RESOURCES_LOCATION);
     }
 
     @Override
