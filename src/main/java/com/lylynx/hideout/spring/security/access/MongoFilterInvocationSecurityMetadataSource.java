@@ -1,10 +1,9 @@
-package com.lylynx.hideout.spring.security;
+package com.lylynx.hideout.spring.security.access;
 
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -14,22 +13,27 @@ import java.util.List;
  * Date: 20.07.14
  * Time: 22:35
  */
-public class CustomFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
+public class MongoFilterInvocationSecurityMetadataSource implements FilterInvocationSecurityMetadataSource {
 
+    private final WebAccessRuleRepository webAccessRuleRepository;
+
+    public MongoFilterInvocationSecurityMetadataSource(final WebAccessRuleRepository webAccessRuleRepository) {
+        this.webAccessRuleRepository = webAccessRuleRepository;
+    }
 
     @Override
     public Collection<ConfigAttribute> getAttributes(final Object object) throws IllegalArgumentException {
 
         FilterInvocation fi = (FilterInvocation) object;
 
-        String url = fi.getRequestUrl();
-        String httpMethod = fi.getRequest().getMethod();
-        List<ConfigAttribute> attributes = new ArrayList<ConfigAttribute>();
+        final List<WebAccesRule> webAccesRules = webAccessRuleRepository.findAll();
+        for (WebAccesRule webAccesRule : webAccesRules) {
+            if(webAccesRule.requestMatcher().matches(fi.getRequest())) {
+                return webAccesRule.configAttributes();
+            }
+        }
 
-        // Lookup your database (or other source) using this information and populate the
-        // list of attributes
-
-        return attributes;
+        return null;
     }
 
     @Override

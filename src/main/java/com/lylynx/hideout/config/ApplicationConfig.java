@@ -1,29 +1,22 @@
 package com.lylynx.hideout.config;
 
-import com.lylynx.hideout.account.AccountController;
-import com.lylynx.hideout.account.AccountRepository;
-import com.lylynx.hideout.account.UserService;
 import com.lylynx.hideout.admin.mvc.AdminConsoleController;
-import com.lylynx.hideout.admin.mvc.PartialsController;
+import com.lylynx.hideout.admin.mvc.AdminPartialsController;
+import com.lylynx.hideout.spring.security.user.AccountRepository;
+import com.lylynx.hideout.db.mongo.script.ScriptRunner;
+import com.lylynx.hideout.db.mongo.script.ScriptRunnerRepository;
 import com.lylynx.hideout.error.CustomErrorController;
 import com.lylynx.hideout.home.HomeController;
 import com.lylynx.hideout.signin.SigninController;
 import com.lylynx.hideout.signup.SignupController;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.mongodb.MongoDbFactory;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 class ApplicationConfig {
-
-    @Bean
-    public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() {
-        PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
-        ppc.setLocation(new ClassPathResource("/persistence.properties"));
-        return ppc;
-    }
 
     // CONTROLLERS
     @Bean
@@ -32,8 +25,8 @@ class ApplicationConfig {
     }
 
     @Bean
-    public PartialsController partialsController() {
-        return new PartialsController();
+    public AdminPartialsController partialsController() {
+        return new AdminPartialsController();
     }
 
     @Bean
@@ -47,14 +40,10 @@ class ApplicationConfig {
     }
 
     @Bean
-    public SignupController signupController(final AccountRepository accountRepository, final UserService userService,
+    public SignupController signupController(final AccountRepository accountRepository,
+                                             final UserDetailsService userDetailsService,
                                              final PasswordEncoder passwordEncoder) {
-        return new SignupController(accountRepository, userService, passwordEncoder);
-    }
-
-    @Bean
-    public AccountController accountController(AccountRepository accountRepository) {
-        return new AccountController(accountRepository);
+        return new SignupController(accountRepository, userDetailsService, passwordEncoder);
     }
 
     @Bean
@@ -63,9 +52,10 @@ class ApplicationConfig {
     }
 
     // SERVICES
-    @Bean
-    public UserService userService(final AccountRepository accountRepository) {
-        return new UserService(accountRepository);
-    }
 
+    //MONGO SCRIPT RUNNER
+    @Bean(initMethod = "init")
+    public ScriptRunner scritptRunner(ScriptRunnerRepository scriptRunnerRepository, MongoDbFactory mongoDbFactory) {
+        return new ScriptRunner(scriptRunnerRepository, mongoDbFactory);
+    }
 }

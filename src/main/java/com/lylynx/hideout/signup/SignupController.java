@@ -1,7 +1,7 @@
 package com.lylynx.hideout.signup;
 
-import com.lylynx.hideout.account.AccountRepository;
-import com.lylynx.hideout.account.UserService;
+import com.lylynx.hideout.spring.security.user.AccountRepository;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,12 +19,13 @@ public class SignupController {
     private static final String SIGNUP_VIEW_NAME = "signup/signup";
 
 	private AccountRepository accountRepository;
-	
-	private UserService userService;
 
+
+    private final UserDetailsService userService;
     private PasswordEncoder passwordEncoder;
 
-    public SignupController(final AccountRepository accountRepository, final UserService userService, final PasswordEncoder passwordEncoder) {
+    public SignupController(final AccountRepository accountRepository, final UserDetailsService userService,
+                            final PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;

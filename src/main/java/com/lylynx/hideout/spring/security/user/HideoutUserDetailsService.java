@@ -1,9 +1,7 @@
-package com.lylynx.hideout.account;
+package com.lylynx.hideout.spring.security.user;
 
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,25 +9,22 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.annotation.PostConstruct;
-import java.util.Collections;
 
-public class UserService implements UserDetailsService {
+public class HideoutUserDetailsService implements UserDetailsService {
 	
 	private AccountRepository accountRepository;
 
-    public UserService(final AccountRepository accountRepository) {
+    public HideoutUserDetailsService(final AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
 
     @PostConstruct
 	protected void initialize() {
-		accountRepository.save(new Account("user", "demo", "ROLE_USER"));
-		accountRepository.save(new Account("admin", "admin", "ROLE_ADMIN"));
 	}
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Account account = accountRepository.findOneByEmail(username);
+		Account account = accountRepository.findOneByUsername(username);
 		if(account == null) {
 			throw new UsernameNotFoundException("user not found");
 		}
@@ -41,15 +36,16 @@ public class UserService implements UserDetailsService {
 	}
 	
 	private Authentication authenticate(Account account) {
-		return new UsernamePasswordAuthenticationToken(createUser(account), null, Collections.singleton(createAuthority(account)));		
+        User user = createUser(account);
+
+		return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
 	}
 	
 	private User createUser(Account account) {
-		return new User(account.getEmail(), account.getPassword(), Collections.singleton(createAuthority(account)));
+        return new com.lylynx.hideout.spring.security.user.User(account.getUsername(), account.getPassword(),
+                account.isEnabled(), account.isAccountNonExpired(), account.isCredentialsNonExpired(),
+                !account.isLocked(), account.getRoles(), account.getGroups());
 	}
 
-	private GrantedAuthority createAuthority(Account account) {
-		return new SimpleGrantedAuthority(account.getRole());
-	}
 
 }

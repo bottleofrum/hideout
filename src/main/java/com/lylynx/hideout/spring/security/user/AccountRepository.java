@@ -1,4 +1,4 @@
-package com.lylynx.hideout.account;
+package com.lylynx.hideout.spring.security.user;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 
@@ -10,6 +10,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  */
 public interface AccountRepository extends MongoRepository<Account,String>{
 
-    Account findOneByEmail(String email);
-
+    Account findOneByUsername(String username);
 }

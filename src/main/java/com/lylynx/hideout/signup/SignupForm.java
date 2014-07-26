@@ -1,8 +1,8 @@
 package com.lylynx.hideout.signup;
 
-import org.hibernate.validator.constraints.*;
-
-import com.lylynx.hideout.account.Account;
+import com.lylynx.hideout.spring.security.user.Account;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 public class SignupForm {
@@ -34,6 +34,7 @@ public class SignupForm {
 	}
 
 	public Account createAccount(final PasswordEncoder passwordEncoder) {
-        return new Account(getEmail(), passwordEncoder.encode(getPassword()), "ROLE_USER");
+        return null;//new Account(getEmail(), passwordEncoder.encode(getPassword()), "ROLE_USER");
 	}
+
 }

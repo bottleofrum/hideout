@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @RequestMapping(value = "/.console/.partials", method = RequestMethod.GET)
-public class PartialsController {
+public class AdminPartialsController {
 
     @RequestMapping(value = "/**", method = RequestMethod.GET)
     public String getPartial(HttpServletRequest request) {

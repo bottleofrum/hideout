@@ -22,6 +22,9 @@
         <spring.security.version>3.2.4.RELEASE</spring.security.version>
         <spring.mongo.version>1.5.0.RELEASE</spring.mongo.version>
         <jade.version>0.4.1-SNAPSHOT</jade.version>
+
+        <mongo.host>localhost</mongo.host>
+        <mongo.port>27017</mongo.port>
     </properties>
     <repositories>
         <repository>
@@ -94,23 +97,6 @@
             <artifactId>spring-security-taglibs</artifactId>
         </dependency>
         <!-- View -->
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf</artifactId>
-            <version>${org.thymeleaf-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf</groupId>
-            <artifactId>thymeleaf-spring4</artifactId>
-            <version>${org.thymeleaf-version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.thymeleaf.extras</groupId>
-            <artifactId>thymeleaf-extras-springsecurity3</artifactId>
-            <version>${org.thymeleaf.extras.springsecurity3-version}</version>
-        </dependency>
-
-
         <dependency>
             <groupId>de.neuland-bfi</groupId>
             <artifactId>jade4j</artifactId>
@@ -185,6 +171,11 @@
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>14.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.3</version>
         </dependency>
         <!-- Test -->
         <dependency>
@@ -275,5 +266,21 @@
                 </configuration>
             </plugin>
         </plugins>
+        <resources>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>true</filtering>
+                <includes>
+                    <include>**/*.properties</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources/</directory>
+                <filtering>false</filtering>
+                <excludes>
+                    <exclude>**/*.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
     </build>
 </project>

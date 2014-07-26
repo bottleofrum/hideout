@@ -1,49 +1,56 @@
 package com.lylynx.hideout.config;
 
+import com.lylynx.hideout.db.mongo.converters.DateTimeToDateConverter;
+import com.lylynx.hideout.db.mongo.converters.DateToDateTimeConverter;
+import com.lylynx.hideout.db.mongo.converters.StringToGrantedAuthorityConverter;
 import com.mongodb.Mongo;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.mongodb.MongoDbFactory;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
-import org.springframework.data.mongodb.core.convert.DefaultMongoTypeMapper;
-import org.springframework.data.mongodb.core.convert.MappingMongoConverter;
-import org.springframework.data.mongodb.core.convert.MongoTypeMapper;
-import org.springframework.data.mongodb.core.mapping.MongoMappingContext;
+import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.mongodb.config.AbstractMongoConfiguration;
+import org.springframework.data.mongodb.core.convert.CustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
-import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 @Configuration
 @EnableMongoRepositories("com.lylynx.hideout")
-class MongoConfig {
+class MongoConfig extends AbstractMongoConfiguration{
 
     @Bean
-    public MongoDbFactory mongoDbFactory() throws UnknownHostException {
-        return new SimpleMongoDbFactory(new Mongo(), "hideout");
+    public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() {
+        PropertyPlaceholderConfigurer ppc = new PropertyPlaceholderConfigurer();
+        ppc.setLocation(new ClassPathResource("/persistence.properties"));
+        return ppc;
     }
 
-    @Bean
-    public MongoTemplate mongoTemplate() throws UnknownHostException {
-        MongoTemplate template = new MongoTemplate(mongoDbFactory(), mongoConverter());
-        return template;
+    @Value("${mongo.host}")
+    private String mongoHost;
+
+    @Value("${mongo.port}")
+    private String mongoPort;
+
+    @Override
+    protected String getDatabaseName() {
+        return Constants.MONGO_DATABASE;
     }
 
-    @Bean
-    public MongoTypeMapper mongoTypeMapper() {
-        return new DefaultMongoTypeMapper(null);
+    @Override
+    public Mongo mongo() throws Exception {
+        return new Mongo(mongoHost, Integer.parseInt(mongoPort));
     }
 
-    @Bean
-    public MongoMappingContext mongoMappingContext() {
-        return new MongoMappingContext();
-    }
-
-    @Bean
-    public MappingMongoConverter mongoConverter() throws UnknownHostException {
-        MappingMongoConverter converter = new MappingMongoConverter(mongoDbFactory(), mongoMappingContext());
-        converter.setTypeMapper(mongoTypeMapper());
-        return converter;
+    @Override
+    public CustomConversions customConversions() {
+        List<Converter<?, ?>> converterList = new ArrayList<>();
+        converterList.add(new DateTimeToDateConverter());
+        converterList.add(new DateToDateTimeConverter());
+        converterList.add(new StringToGrantedAuthorityConverter());
+        return new CustomConversions(converterList);
     }
 }
