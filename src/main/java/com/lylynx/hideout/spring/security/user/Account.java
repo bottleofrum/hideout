@@ -1,6 +1,7 @@
 package com.lylynx.hideout.spring.security.user;
 
 import com.lylynx.hideout.config.Constants;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.joda.time.DateTime;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,6 +16,7 @@ public class Account {
 
     private String username;
 
+    @JsonIgnore
     private String password;
 
     private boolean locked;

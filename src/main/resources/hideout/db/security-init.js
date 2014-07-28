@@ -23,6 +23,16 @@ function init(host, port, database) {
 
   mongo = new Mongo(host+':'+port);
   db = mongo.getDB(database);
+
+  collecions = ['security-web-access','security-roles','security-groups','security-users'];
+
+  for(var i = 0; i < collecions.length; ++i) {
+    col = db.getCollection(collecions[i]);
+    if(col) {
+      col.drop();
+    }
+  }
+
   access = db.getCollection('security-web-access');
 
 
@@ -33,6 +43,7 @@ function init(host, port, database) {
   access.insert(new WebAccesRule('ANT', '/signin*','permitAll'));
   access.insert(new WebAccesRule('ANT', '/generalError','permitAll'));
   access.insert(new WebAccesRule('ANT', '/.console/**','hasRole(\'SUPERADMIN\')'));
+  access.insert(new WebAccesRule('ANT', '/r/security/**','hasRole(\'SUPERADMIN\')'));
   access.insert(new WebAccesRule('ANY', '[ANY]','authenticated'));
 
   role = db.getCollection('security-roles');

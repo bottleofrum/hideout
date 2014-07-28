@@ -14,4 +14,7 @@ public class Constants {
 
     //ROLES
     public static final String ROLE_SUPERADMIN = "SUPERADMIN";
+
+    //VAROUS
+    public static final String MIME_TYPE_JSON = "application/json";
 }

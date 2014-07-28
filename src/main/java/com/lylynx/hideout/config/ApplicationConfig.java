@@ -2,6 +2,9 @@ package com.lylynx.hideout.config;
 
 import com.lylynx.hideout.admin.mvc.AdminConsoleController;
 import com.lylynx.hideout.admin.mvc.AdminPartialsController;
+import com.lylynx.hideout.apps.security.account.AccountController;
+import com.lylynx.hideout.apps.security.account.GroupController;
+import com.lylynx.hideout.apps.security.account.RoleController;
 import com.lylynx.hideout.spring.security.user.AccountRepository;
 import com.lylynx.hideout.db.mongo.script.ScriptRunner;
 import com.lylynx.hideout.db.mongo.script.ScriptRunnerRepository;
@@ -9,6 +12,8 @@ import com.lylynx.hideout.error.CustomErrorController;
 import com.lylynx.hideout.home.HomeController;
 import com.lylynx.hideout.signin.SigninController;
 import com.lylynx.hideout.signup.SignupController;
+import com.lylynx.hideout.spring.security.user.GroupRepository;
+import com.lylynx.hideout.spring.security.user.RoleRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDbFactory;
@@ -44,6 +49,21 @@ class ApplicationConfig {
                                              final UserDetailsService userDetailsService,
                                              final PasswordEncoder passwordEncoder) {
         return new SignupController(accountRepository, userDetailsService, passwordEncoder);
+    }
+
+    @Bean
+    public AccountController accountController(AccountRepository accountRepository) {
+        return new AccountController(accountRepository);
+    }
+
+    @Bean
+    public GroupController groupController(GroupRepository groupRepository) {
+        return new GroupController(groupRepository);
+    }
+
+    @Bean
+    public RoleController roleController(RoleRepository roleRepository) {
+        return new RoleController(roleRepository);
     }
 
     @Bean
