@@ -1,28 +1,38 @@
 package com.lylynx.hideout.spring.security.user;
 
 import com.lylynx.hideout.config.Constants;
+import com.lylynx.hideout.spring.security.user.validators.UniqueUsername;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @SuppressWarnings("serial")
 @Document(collection = Constants.SECURITY_USERS)
 public class Account {
 
+    @Id
     private String id;
 
+    @Indexed(unique = true)
+    @NotEmpty
+    @UniqueUsername
     private String username;
 
-    @JsonIgnore
+    @NotEmpty
     private String password;
 
     private boolean locked;
 
     private boolean enabled;
 
+    @NotNull
     private DateTime accountCreationDate;
 
     private DateTime accountExpirationDate;
@@ -37,6 +47,7 @@ public class Account {
         return id;
     }
 
+    @JsonIgnore
     public String getPassword() {
         return password;
     }

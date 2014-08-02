@@ -4,7 +4,7 @@ html
         title=i18n['admin.title']
         meta(http-equiv="Content-Type", content="text/html; charset=UTF-8")
         link(href="#{url.url('/admin/resources/css/bootstrap.min.css')}", rel="stylesheet", media="screen")
-        link(href="#{url.url('/admin/resources/css/bootstrap-theme.min.css')}", rel="stylesheet", media="screen")
+        //link(href="#{url.url('/admin/resources/css/bootstrap-theme.min.css')}", rel="stylesheet", media="screen")
         link(href="#{url.url('/admin/resources/css/admin.css')}", rel="stylesheet", media="screen")
         script(src="#{url.url('/admin/resources/libs/jquery.min.js')}")
         script(src="#{url.url('/admin/resources/libs/bootstrap.min.js')}")
@@ -22,11 +22,19 @@ html
                             ul.dropdown-menu(role="menu")
                                 li
                                     a(ui-sref="security") #{i18n['admin.apps.security']}
-        .container(ui-view)
+        .container
+            div(style="positon:relative;")
+                .h-alert-pane
+                    div(h-alert, ng-repeat="alert in _hideoutAlerts", id="{{alert.id}}", type="{{alert.type}}",
+                    message="{{alert.message}}")
+            .row(ui-view)
+        script(src="#{url.url('/admin/resources/libs/underscore-min.js')}")
         script(src="#{url.url('/admin/resources/libs/angular.js')}")
+        script(src="#{url.url('/admin/resources/libs/angular-animate.min.js')}")
         script(src="#{url.url('/admin/resources/libs/angular-resource.js')}")
         script(src="#{url.url('/admin/resources/libs/angular-ui-router.js')}")
         script(src="#{url.url('/admin/resources/libs/ui-bootstrap.min.js')}")
         script(src="#{url.url('/admin/resources/libs/ng-table.min.js')}")
+        script(src="#{url.url('/admin/resources/js/utils.js')}")
         script(src="#{url.url('/admin/resources/js/security/security.js')}")
         script(src="#{url.url('/admin/resources/js/hideout.js')}")

@@ -10,7 +10,7 @@ import com.google.common.base.Throwables;
  * General error handler for the application.
  */
 @ControllerAdvice
-class ExceptionHandler {
+public class ExceptionHandler {
 
 	/**
 	 * Handle exceptions thrown by handlers.

@@ -40,7 +40,10 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http.addFilter(filterSecurityInterceptor).formLogin().loginPage("/signin").failureUrl("/signin?error=1").and().rememberMe()
-                .rememberMeServices(new TokenBasedRememberMeServices(REMEMBER_ME_KEY, userDetailsService())).key(REMEMBER_ME_KEY);
+                .rememberMeServices(new TokenBasedRememberMeServices(REMEMBER_ME_KEY,
+                        userDetailsService())).key(REMEMBER_ME_KEY)
+                //TODO: CONFIGURE IT PROPERLY
+                .and().csrf().disable();
     }
 
     @Override

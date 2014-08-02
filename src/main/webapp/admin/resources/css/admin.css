@@ -4,6 +4,31 @@ body {
 
 /*VARIOUS*/
 
+.h-alert-pane {
+    position: absolute;
+    top: 60px;
+    z-index: 1031;
+    left: 550px;
+    width: 600px;
+}
+
 .h-tab-pane {
+    margin-top: 20px;
+}
+
+.fade {
+    opacity: 0;
+}
+.fade.in {
+    -webkit-transition: opacity 3.0s linear;
+    -moz-transition: opacity 3.0s linear;
+    -o-transition: opacity 3.0s linear;
+    transition: opacity 3.0s linear;
+    opacity: 1;
+}
+
+/*SECUTITY*/
+
+.h-sec-main-panel {
     margin-top: 20px;
 }

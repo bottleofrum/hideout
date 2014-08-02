@@ -16,4 +16,5 @@
 	</root>
 
 	<logger name="com.lylynx.hideout" level="ALL" />
+	<logger name="org.springframework" level="ALL" />
 </configuration>

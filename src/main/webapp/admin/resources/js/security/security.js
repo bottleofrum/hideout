@@ -1,11 +1,37 @@
 !function () {
-  angular.module('security',['ngResource','ngTable'])
+  angular.module('h-security',['ngResource','ngTable','h-utils'])
     .factory('AccountResource', ['hideoutConfig', '$resource', AccountResource])
     .factory('GroupResource', ['hideoutConfig', '$resource', GroupResource])
     .factory('RoleResource', ['hideoutConfig', '$resource', RoleResource])
-    .controller('AccountController', ['$scope', 'AccountResource', 'ngTableParams', AccountController])
+    .controller('AccountController', ['$scope', 'AccountResource', 'ngTableParams', '$state', AccountController])
     .controller('GroupController', ['$scope', 'GroupResource', 'ngTableParams', GroupController])
-    .controller('RoleController', ['$scope', 'RoleResource', 'ngTableParams', RoleController]);
+    .controller('RoleController', ['$scope', 'RoleResource', 'ngTableParams', RoleController])
+    .controller('UserController', ['$scope', 'AccountResource', 'errorHandlerMethodFactory', 'alertsService', '$state', UserController])
+    .config(['hideoutConfig', '$stateProvider', Config]);
+
+  function Config(hideoutConfig, $stateProvider) {
+
+    $stateProvider
+      .state('security', {
+        url: hideoutConfig.consoleBaseUrl+"/security",
+        views: {
+          '@': {
+            templateUrl: hideoutConfig.consoleBaseUrl + "/.partials/security/security-main"
+          },
+          '@security': {
+            templateUrl: hideoutConfig.consoleBaseUrl + "/.partials/security/tabs"
+          }
+        }
+      })
+      .state('security.addUser', {
+        views: {
+          '' : {
+            templateUrl: hideoutConfig.consoleBaseUrl + "/.partials/security/user",
+            controller: 'UserController'
+          }
+        }
+      });
+  }
 
   function AccountResource(hideoutConfig, $resource){
     return $resource(hideoutConfig.restUrl + '/security/account/:id');
@@ -18,7 +44,7 @@
     return $resource(hideoutConfig.restUrl + '/security/role/:id');
   }
 
-  function AccountController($scope, AccountResource, ngTableParams) {
+  function AccountController($scope, AccountResource, ngTableParams, $state) {
     $scope.tableParams = new ngTableParams({
       page: 1,
       count: 10
@@ -30,7 +56,6 @@
         });
       }
     });
-
   }
   function GroupController($scope, GroupResource, ngTableParams) {
     $scope.tableParams = new ngTableParams({
@@ -58,7 +83,23 @@
         });
       }
     });
-
   }
+
+  function UserController($scope, AccountResource, errorHandlerMethodFactory, alertsService, $state) {
+    $scope.model = {
+      accountCreationDate: new Date()
+    };
+
+    $scope.save = function(){
+      AccountResource.save($scope.model).$promise.then(function () {
+        alertsService.add({
+          type:'success',
+          message:'Account created'
+        });
+        $state.go('security');
+      }, errorHandlerMethodFactory($scope));
+    }
+  }
+
 
 }();

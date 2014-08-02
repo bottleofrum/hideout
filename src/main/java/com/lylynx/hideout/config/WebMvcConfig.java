@@ -1,5 +1,6 @@
 package com.lylynx.hideout.config;
 
+import com.lylynx.hideout.error.ExceptionHandler;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,6 +56,11 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
+    }
+
+    @Bean
+    public ExceptionHandler exceptionHandler() {
+        return new ExceptionHandler();
     }
 
     /**

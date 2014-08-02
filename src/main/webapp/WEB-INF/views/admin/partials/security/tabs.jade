@@ -1,0 +1,42 @@
+tabset
+    tab(heading="#{i18n['admin.security.tab.users']}")
+        .h-sec-main-panel(ng-controller="AccountController")
+            button.btn.btn-primary.pull-right(type="button", ui-sref="security.addUser")
+                span.glyphicon.glyphicon-plus-sign &nbsp;#{i18n['admin.security.users.controls.add']}
+            .clearfix
+            table.table.table-striped.table-hover(ng-table="tableParams", style="margin-top: 30px")
+                tr(ng-repeat="account in $data")
+                    td(data-title="'#{i18n['admin.security.users.table.username']}'") {{account.username}}
+                    td(data-title="'#{i18n['admin.security.users.table.enabled']}'") {{account.enabled}}
+                    td(data-title="'#{i18n['admin.security.users.table.locked']}'") {{account.locked}}
+                    td(data-title="'#{i18n['admin.security.users.table.accountCreationDate']}'")
+                        span(data-date-time="account.accountCreationDate")
+                    td(data-title="'#{i18n['admin.security.users.table.accountExpirationDate']}'")
+                        span(data-date-time="account.accountExpirationDate")
+                    td(data-title="'#{i18n['admin.security.users.table.credentialsExpirationDate']}'")
+                        span(data-date-time="account.credentialsExpirationDate")
+                    td(data-title="'#{i18n['admin.security.users.table.groups']}'")
+                        span(ng-repeat="group in account.groups")
+                            span {{ group.name }}
+                            span(ng-if="!$first") ,
+                    td(data-title="'#{i18n['admin.security.users.table.roles']}'")
+                        span(ng-repeat="role in account.roles")
+                            span {{ role }}
+                            span(ng-if="!$first") ,
+        .clearfix
+    tab(heading="#{i18n['admin.security.tab.groups']}")
+        .h-sec-main-panel(ng-controller="GroupController")
+            button.btn.btn-primary.pull-right(type="button", ui-sref="security.addUser")
+                span.glyphicon.glyphicon-plus-sign &nbsp;#{i18n['admin.security.groups.controls.add']}
+            .clearfix
+            table.table.table-striped.table-hover(ng-table="tableParams", style="margin-top: 30px")
+                tr(ng-repeat="group in $data")
+                    td(data-title="'#{i18n['admin.security.groups.table.name']}'") {{group.name}}
+    tab(heading="#{i18n['admin.security.tab.roles']}")
+        .h-sec-main-panel(ng-controller="RoleController")
+            button.btn.btn-primary.pull-right(type="button", ui-sref="security.addUser")
+                span.glyphicon.glyphicon-plus-sign &nbsp;#{i18n['admin.security.roles.controls.add']}
+            .clearfix
+            table.table.table-striped.table-hover(ng-table="tableParams", style="margin-top: 30px")
+                tr(ng-repeat="role in $data")
+                    td(data-title="'#{i18n['admin.security.roles.table.name']}'") {{role.authority}}
