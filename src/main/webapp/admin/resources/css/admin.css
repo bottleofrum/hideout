@@ -27,6 +27,26 @@ body {
     opacity: 1;
 }
 
+/*MULTISELECT*/
+
+.h-multiselect-pane {
+    width: 43%;
+    display: inline-block;
+}
+
+.h-multiselect-button-pane {
+    width: 14%;
+    display: inline-block;
+    padding-left: 2%;
+    padding-right: 2%;
+    position: relative;
+    bottom: 50px;
+}
+
+.h-multiselect-button-pane div {
+    margin-bottom: 5px;
+}
+
 /*SECUTITY*/
 
 .h-sec-main-panel {

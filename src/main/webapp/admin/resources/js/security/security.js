@@ -6,7 +6,8 @@
     .controller('AccountController', ['$scope', 'AccountResource', 'ngTableParams', '$state', AccountController])
     .controller('GroupController', ['$scope', 'GroupResource', 'ngTableParams', GroupController])
     .controller('RoleController', ['$scope', 'RoleResource', 'ngTableParams', RoleController])
-    .controller('UserController', ['$scope', 'AccountResource', 'errorHandlerMethodFactory', 'alertsService', '$state', UserController])
+    .controller('UserController', ['$scope', 'AccountResource', 'errorHandlerMethodFactory', 'alertsService', '$state',
+      'GroupResource', 'RoleResource', UserController])
     .config(['hideoutConfig', '$stateProvider', Config]);
 
   function Config(hideoutConfig, $stateProvider) {
@@ -85,10 +86,18 @@
     });
   }
 
-  function UserController($scope, AccountResource, errorHandlerMethodFactory, alertsService, $state) {
+  function UserController($scope, AccountResource, errorHandlerMethodFactory, alertsService, $state, GroupResource, RoleResource) {
     $scope.model = {
-      accountCreationDate: new Date()
+      accountCreationDate: new Date(),
+      enabled: true
     };
+
+    GroupResource.get({page: 0, size: 10000000}, function(response){
+      $scope.groups = response.content;
+    });
+    RoleResource.get({page: 0, size: 10000000}, function (response) {
+      $scope.roles = response.content;
+    });
 
     $scope.save = function(){
       AccountResource.save($scope.model).$promise.then(function () {

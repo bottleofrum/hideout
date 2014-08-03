@@ -1,0 +1,12 @@
+div
+    .h-multiselect-pane
+        select.form-control(ng-options="getLabel(item) for item in hMultiselect | difference:selectedElements", ng-model="toBeSelected",
+        size="8", multiple)
+    .h-multiselect-button-pane
+        div
+            button.btn.btn-default(type="button", ng-click="select()") >
+        div
+            button.btn.btn-default(type="button", ng-click="remove()") <
+    .h-multiselect-pane
+        select.form-control(ng-options="getLabel(item) for item in selectedElements", ng-model="toBeRemoved",
+        size="8", multiple)

@@ -2,10 +2,12 @@ package com.lylynx.hideout.spring.security.user;
 
 
 import com.lylynx.hideout.config.Constants;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
 @Document(collection = Constants.SECURITY_ROLES)
+@JsonDeserialize
 public class HideoutGrantedAuthority implements GrantedAuthority{
 
     private String id;

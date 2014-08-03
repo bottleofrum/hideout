@@ -1,4 +1,4 @@
-.col-sm-5
+.col-sm-6
     h3 #{i18n['admin.security.users.controls.add']}
     .row
         form.form-horizontal(novalidate,name="form",ng-submit="save()")
@@ -17,6 +17,16 @@
                 .col-sm-8
                     input.form-control(name="repeatedPassword", ng-model="model.repeatedPassword", server-error, type="password")
                     div(errors-printer="repeatedPassword")
+            .form-group
+                label.col-sm-4.control-label Groups
+                .col-sm-8
+                    div(name="groups", h-multiselect="groups", ng-model="model.groups", server-error)
+                    div(errors-printer="groups")
+            .form-group
+                label.col-sm-4.control-label Roles
+                .col-sm-8
+                    div(name="roles", h-multiselect="roles", ng-model="model.roles", label="authority", server-error)
+                    div(errors-printer="roles")
             .form-group
                 .col-sm-offset-4.col-sm-8
                     .pull-right

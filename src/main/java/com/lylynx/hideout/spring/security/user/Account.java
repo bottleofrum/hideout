@@ -3,6 +3,7 @@ package com.lylynx.hideout.spring.security.user;
 import com.lylynx.hideout.config.Constants;
 import com.lylynx.hideout.spring.security.user.validators.UniqueUsername;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
 import org.springframework.data.annotation.Id;
@@ -39,6 +40,7 @@ public class Account {
 
     private DateTime credentialsExpirationDate;
 
+    @JsonDeserialize(contentAs = HideoutGrantedAuthority.class)
     private Collection<GrantedAuthority> roles;
 
     private Collection<Group> groups;

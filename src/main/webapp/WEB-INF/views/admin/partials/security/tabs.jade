@@ -21,7 +21,7 @@ tabset
                             span(ng-if="!$first") ,
                     td(data-title="'#{i18n['admin.security.users.table.roles']}'")
                         span(ng-repeat="role in account.roles")
-                            span {{ role }}
+                            span {{ role.authority }}
                             span(ng-if="!$first") ,
         .clearfix
     tab(heading="#{i18n['admin.security.tab.groups']}")

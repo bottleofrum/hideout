@@ -1,6 +1,9 @@
 package com.lylynx.hideout.spring.security.user;
 
 import com.lylynx.hideout.config.Constants;
+import org.codehaus.jackson.annotate.JsonCreator;
+import org.codehaus.jackson.annotate.JsonProperty;
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
@@ -13,7 +16,10 @@ public class Group {
     private final String name;
     private final Collection<GrantedAuthority> authorities;
 
-    public Group(final String id, final String name, final Collection<GrantedAuthority> authorities) {
+    @JsonCreator
+    public Group(@JsonProperty("id") final String id, @JsonProperty("name") final String name,
+            @JsonProperty("authorities") @JsonDeserialize(contentAs = HideoutGrantedAuthority.class) final
+            Collection<GrantedAuthority> authorities) {
         this.id = id;
         this.name = name;
         this.authorities = authorities;

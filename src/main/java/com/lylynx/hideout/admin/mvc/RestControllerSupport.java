@@ -57,4 +57,10 @@ public abstract class RestControllerSupport {
         return responseEntity;
     }
 
+    @ExceptionHandler
+    public @ResponseBody ResponseEntity<? extends Object> errors(Exception exception) throws Throwable {
+        ResponseEntity<? extends Object> responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        return responseEntity;
+    }
+
 }
