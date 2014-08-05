@@ -3,6 +3,7 @@
     .factory('AccountResource', ['hideoutConfig', '$resource', AccountResource])
     .factory('GroupResource', ['hideoutConfig', '$resource', GroupResource])
     .factory('RoleResource', ['hideoutConfig', '$resource', RoleResource])
+    .controller('TabsController', ['$scope', '$state', '$stateParams', TabsController])
     .controller('AccountController', ['$scope', 'AccountResource', 'ngTableParams', '$state', AccountController])
     .controller('GroupController', ['$scope', 'GroupResource', 'ngTableParams', GroupController])
     .controller('RoleController', ['$scope', 'RoleResource', 'ngTableParams', RoleController])
@@ -14,13 +15,14 @@
 
     $stateProvider
       .state('security', {
-        url: hideoutConfig.consoleBaseUrl+"/security",
+        url: hideoutConfig.consoleBaseUrl+"/security/:tab",
         views: {
           '@': {
             templateUrl: hideoutConfig.consoleBaseUrl + "/.partials/security/security-main"
           },
           '@security': {
-            templateUrl: hideoutConfig.consoleBaseUrl + "/.partials/security/tabs"
+            templateUrl: hideoutConfig.consoleBaseUrl + "/.partials/security/tabs",
+            controller: 'TabsController'
           }
         }
       })
@@ -43,6 +45,36 @@
   }
   function RoleResource(hideoutConfig, $resource){
     return $resource(hideoutConfig.restUrl + '/security/role/:id');
+  }
+
+  function TabsController($scope, $state, $stateParams ) {
+    $scope.tabsActivation = {
+      'users': true,
+      'groups': false,
+      'roles': false
+    };
+
+    $scope.$watch('tabsActivation', function(newValue){
+      if(!newValue) return;
+      _.each(['users', 'groups','roles'], function(tab){
+        if($scope.tabsActivation[tab]) {
+          $state.go('security',{'tab':tab})
+        }
+      });
+
+    }, true);
+
+    if($stateParams['tab']) {
+      setActiveTab($stateParams['tab'])
+    }
+
+    function setActiveTab (tab) {
+      _.each(['users', 'groups','roles'], function(tab){
+        $scope.tabsActivation[tab] = false;
+      });
+      $scope.tabsActivation[tab] = true;
+    }
+
   }
 
   function AccountController($scope, AccountResource, ngTableParams, $state) {
@@ -86,7 +118,8 @@
     });
   }
 
-  function UserController($scope, AccountResource, errorHandlerMethodFactory, alertsService, $state, GroupResource, RoleResource) {
+  function UserController($scope, AccountResource, errorHandlerMethodFactory, alertsService, $state, GroupResource,
+                          RoleResource) {
     $scope.model = {
       accountCreationDate: new Date(),
       enabled: true
@@ -108,6 +141,7 @@
         $state.go('security');
       }, errorHandlerMethodFactory($scope));
     }
+
   }
 
 

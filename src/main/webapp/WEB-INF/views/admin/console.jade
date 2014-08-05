@@ -21,7 +21,7 @@ html
                             a.dropdown-toggle(href="#", data-toggle="dropdown") #{i18n['admin.menu.main']}
                             ul.dropdown-menu(role="menu")
                                 li
-                                    a(ui-sref="security") #{i18n['admin.apps.security']}
+                                    a(ui-sref="security({tab:'users'})") #{i18n['admin.apps.security']}
         .container
             div(style="positon:relative;")
                 .h-alert-pane

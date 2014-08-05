@@ -1,5 +1,5 @@
 tabset
-    tab(heading="#{i18n['admin.security.tab.users']}")
+    tab(heading="#{i18n['admin.security.tab.users']}", active="tabsActivation['users']")
         .h-sec-main-panel(ng-controller="AccountController")
             button.btn.btn-primary.pull-right(type="button", ui-sref="security.addUser")
                 span.glyphicon.glyphicon-plus-sign &nbsp;#{i18n['admin.security.users.controls.add']}
@@ -24,7 +24,7 @@ tabset
                             span {{ role.authority }}
                             span(ng-if="!$first") ,
         .clearfix
-    tab(heading="#{i18n['admin.security.tab.groups']}")
+    tab(heading="#{i18n['admin.security.tab.groups']}", active="tabsActivation['groups']")
         .h-sec-main-panel(ng-controller="GroupController")
             button.btn.btn-primary.pull-right(type="button", ui-sref="security.addUser")
                 span.glyphicon.glyphicon-plus-sign &nbsp;#{i18n['admin.security.groups.controls.add']}
@@ -32,7 +32,7 @@ tabset
             table.table.table-striped.table-hover(ng-table="tableParams", style="margin-top: 30px")
                 tr(ng-repeat="group in $data")
                     td(data-title="'#{i18n['admin.security.groups.table.name']}'") {{group.name}}
-    tab(heading="#{i18n['admin.security.tab.roles']}")
+    tab(heading="#{i18n['admin.security.tab.roles']}", active="tabsActivation['roles']")
         .h-sec-main-panel(ng-controller="RoleController")
             button.btn.btn-primary.pull-right(type="button", ui-sref="security.addUser")
                 span.glyphicon.glyphicon-plus-sign &nbsp;#{i18n['admin.security.roles.controls.add']}
