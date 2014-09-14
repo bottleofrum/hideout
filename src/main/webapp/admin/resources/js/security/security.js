@@ -1,14 +1,14 @@
 !function () {
-  angular.module('h-security',['ngResource','ngTable','h-utils'])
-    .factory('AccountResource', ['hideoutConfig', '$resource', AccountResource])
-    .factory('GroupResource', ['hideoutConfig', '$resource', GroupResource])
-    .factory('RoleResource', ['hideoutConfig', '$resource', RoleResource])
+  angular.module('h-security',['ngTable','h-utils'])
+    .factory('AccountResource', ['hideoutConfig', 'Resource', AccountResource])
+    .factory('GroupResource', ['hideoutConfig', 'Resource', GroupResource])
+    .factory('RoleResource', ['hideoutConfig', 'Resource', RoleResource])
     .controller('TabsController', ['$scope', '$state', '$stateParams', TabsController])
     .controller('AccountController', ['$scope', 'AccountResource', 'ngTableParams', 'alertsService', 'modalService', 'i18n', ResourceController])
     .controller('GroupController', ['$scope', 'GroupResource', 'ngTableParams', 'alertsService', 'modalService', 'i18n', ResourceController])
     .controller('RoleController', ['$scope', 'RoleResource', 'ngTableParams', 'alertsService', 'modalService', 'i18n', ResourceController])
     .controller('UserController', ['$scope', 'AccountResource', 'errorHandlerMethodFactory', 'alertsService', '$state',
-      'GroupResource', 'RoleResource', 'i18n', UserController])
+      'GroupResource', 'RoleResource', 'i18n', '$stateParams', UserController])
     .config(['hideoutConfig', '$stateProvider', Config]);
 
   function Config(hideoutConfig, $stateProvider) {
@@ -27,6 +27,7 @@
         }
       })
       .state('security.userPanel', {
+        params: ['id','tab'],
         views: {
           '' : {
             templateUrl: hideoutConfig.consoleBaseUrl + "/.partials/security/user",
@@ -36,15 +37,15 @@
       });
   }
 
-  function AccountResource(hideoutConfig, $resource){
-    return $resource(hideoutConfig.restUrl + '/security/account/:id');
+  function AccountResource(hideoutConfig, Resource){
+    return Resource(hideoutConfig.restUrl + '/security/account/:id');
   }
 
-  function GroupResource(hideoutConfig, $resource){
-    return $resource(hideoutConfig.restUrl + '/security/group/:id');
+  function GroupResource(hideoutConfig, Resource){
+    return Resource(hideoutConfig.restUrl + '/security/group/:id');
   }
-  function RoleResource(hideoutConfig, $resource){
-    return $resource(hideoutConfig.restUrl + '/security/role/:id');
+  function RoleResource(hideoutConfig, Resource){
+    return Resource(hideoutConfig.restUrl + '/security/role/:id');
   }
 
   function TabsController($scope, $state, $stateParams ) {
@@ -107,11 +108,16 @@
   }
 
   function UserController($scope, AccountResource, errorHandlerMethodFactory, alertsService, $state, GroupResource,
-                          RoleResource, i18n) {
+                          RoleResource, i18n, $stateParams) {
     $scope.model = {
       accountCreationDate: new Date(),
       enabled: true
     };
+
+    if($stateParams.id) {
+        $scope.model = AccountResource.get({id: $stateParams.id});
+        $scope.editMode = true;
+    }
 
     GroupResource.get({page: 0, size: 10000000}, function(response){
       $scope.groups = response.content;
@@ -121,13 +127,23 @@
     });
 
     $scope.save = function(){
-      AccountResource.save($scope.model).$promise.then(function () {
-        alertsService.add({
-          type:'success',
-          message:i18n['admin.security.message.account.created']
-        });
-        $state.go('security');
-      }, errorHandlerMethodFactory($scope));
+      if($scope.editMode) {
+          AccountResource.update({id: $scope.model.id}, $scope.model).$promise.then(function () {
+            alertsService.add({
+              type:'success',
+              message:i18n['admin.security.message.account.updated']
+            });
+            $state.go('security');
+          }, errorHandlerMethodFactory($scope));
+      } else {
+          AccountResource.create($scope.model).$promise.then(function () {
+              alertsService.add({
+                  type:'success',
+                  message:i18n['admin.security.message.account.created']
+              });
+              $state.go('security');
+          }, errorHandlerMethodFactory($scope));
+      }
     }
 
   }

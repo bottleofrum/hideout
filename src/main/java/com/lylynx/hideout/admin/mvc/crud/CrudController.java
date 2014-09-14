@@ -1,5 +1,6 @@
-package com.lylynx.hideout.admin.mvc;
+package com.lylynx.hideout.admin.mvc.crud;
 
+import com.lylynx.hideout.admin.mvc.RestControllerSupport;
 import com.lylynx.hideout.admin.mvc.error.ErrorsBuilder;
 import com.lylynx.hideout.config.Constants;
 import org.springframework.data.domain.Page;
@@ -7,9 +8,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import javax.validation.groups.Default;
 
 public abstract class CrudController<T> extends RestControllerSupport {
 
@@ -27,7 +29,7 @@ public abstract class CrudController<T> extends RestControllerSupport {
     }
 
     @RequestMapping(value = "", consumes = Constants.MIME_TYPE_JSON, method = RequestMethod.POST)
-    public ResponseEntity create(@Valid @RequestBody T entity) {
+    public ResponseEntity create(@Validated(value = {CreateGroup.class, Default.class}) @RequestBody T entity) {
         repository.save(entity);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -39,7 +41,7 @@ public abstract class CrudController<T> extends RestControllerSupport {
     }
 
     @RequestMapping(value = "/{id}", consumes = Constants.MIME_TYPE_JSON, method = RequestMethod.PUT)
-    public ResponseEntity update(@PathVariable String id, @Valid @RequestBody T entity) {
+    public ResponseEntity update(@PathVariable String id, @Validated(value = {UpdateGroup.class, Default.class}) @RequestBody T entity) {
         repository.save(entity);
         return new ResponseEntity(HttpStatus.OK);
     }

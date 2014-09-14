@@ -24,4 +24,18 @@ public class AccountDTO extends Account {
     public void setRepeatedPassword(final String repeatedPassword) {
         this.repeatedPassword = repeatedPassword;
     }
+
+    public Account toAccount() {
+        Account account = new Account();
+        account.setAccountCreationDate(getAccountCreationDate());
+        account.setAccountExpirationDate(getAccountExpirationDate());
+        account.setCredentialsExpirationDate(getCredentialsExpirationDate());
+        account.setEnabled(isEnabled());
+        account.setGroups(getGroups());
+        account.setLocked(isLocked());
+        account.setRoles(getRoles());
+        account.setPassword(getPassword());
+        account.setUsername(getUsername());
+        return account;
+    }
 }

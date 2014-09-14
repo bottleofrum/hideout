@@ -1,6 +1,6 @@
 div
     .h-multiselect-pane
-        select.form-control(ng-options="getLabel(item) for item in hMultiselect | difference:selectedElements", ng-model="toBeSelected",
+        select.form-control(ng-options="getLabel(item) for item in hMultiselect | difference:selectedElements:'id'", ng-model="toBeSelected",
         size="8", multiple)
     .h-multiselect-button-pane
         div

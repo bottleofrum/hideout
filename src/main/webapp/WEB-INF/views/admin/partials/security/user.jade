@@ -7,12 +7,12 @@
                 .col-sm-8
                     input.form-control(name="username", ng-model="model.username", server-error)
                     div(errors-printer="username")
-            .form-group
+            .form-group(ng-if="!editMode")
                 label.col-sm-4.control-label #{i18n['admin.security.users.form.password']}
                 .col-sm-8
                     input.form-control(name="password", ng-model="model.password", server-error, type="password")
                     div(errors-printer="password")
-            .form-group
+            .form-group(ng-if="!editMode")
                 label.col-sm-4.control-label #{i18n['admin.security.users.form.password2']}
                 .col-sm-8
                     input.form-control(name="repeatedPassword", ng-model="model.repeatedPassword", server-error, type="password")

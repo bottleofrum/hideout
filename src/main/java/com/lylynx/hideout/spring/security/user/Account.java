@@ -1,8 +1,10 @@
 package com.lylynx.hideout.spring.security.user;
 
+import com.lylynx.hideout.admin.mvc.crud.CreateGroup;
 import com.lylynx.hideout.config.Constants;
 import com.lylynx.hideout.spring.security.user.validators.UniqueUsername;
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.codehaus.jackson.annotate.JsonProperty;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
@@ -16,6 +18,7 @@ import java.util.Collection;
 
 @SuppressWarnings("serial")
 @Document(collection = Constants.SECURITY_USERS)
+@UniqueUsername
 public class Account {
 
     @Id
@@ -23,10 +26,9 @@ public class Account {
 
     @Indexed(unique = true)
     @NotEmpty
-    @UniqueUsername
     private String username;
 
-    @NotEmpty
+    @NotEmpty(groups = CreateGroup.class)
     private String password;
 
     private boolean locked;
@@ -54,6 +56,7 @@ public class Account {
         return password;
     }
 
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }
@@ -106,6 +109,7 @@ public class Account {
         this.accountCreationDate = accountCreationDate;
     }
 
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         if(null == accountExpirationDate) {
             return true;
@@ -114,6 +118,7 @@ public class Account {
         return accountExpirationDate.isAfterNow();
     }
 
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         if(null == credentialsExpirationDate) {
             return true;

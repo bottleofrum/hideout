@@ -1,6 +1,6 @@
 package com.lylynx.hideout.apps.security;
 
-import com.lylynx.hideout.admin.mvc.CrudController;
+import com.lylynx.hideout.admin.mvc.crud.CrudController;
 import com.lylynx.hideout.admin.mvc.error.ErrorsBuilder;
 import com.lylynx.hideout.spring.security.user.HideoutGrantedAuthority;
 import com.lylynx.hideout.spring.security.user.RoleRepository;

@@ -13,8 +13,9 @@ import javax.validation.ConstraintValidatorContext;
  * Date: 02.08.14
  * Time: 17:57
  */
-public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, String> {
+public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, Account> {
 
+    private static final String MESSAGE_CODE = "{com.lylynx.hideout.spring.security.user.validators.UniqueUsername.message}";
     @Autowired
     private AccountRepository accountRepository;
 
@@ -24,11 +25,15 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
     }
 
     @Override
-    public boolean isValid(final String username, final ConstraintValidatorContext context) {
-        final Account account = accountRepository.findOneByUsername(username);
-        if(null == account) {
+    public boolean isValid(final Account entity, final ConstraintValidatorContext context) {
+        final Account account = accountRepository.findOneByUsername(entity.getUsername());
+        if(null == account || account.getId().equals(entity.getId())) {
             return true;
         }
+
+        context.buildConstraintViolationWithTemplate(MESSAGE_CODE)
+                .addNode("username").addConstraintViolation();
+
         return false;
     }
 }

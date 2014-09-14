@@ -1,5 +1,5 @@
 !function () {
-    angular.module('h-utils', [])
+    angular.module('h-utils', ['ngResource'])
         .constant('hideoutConfig', hideoutConfig)
         .factory('errorHandlerMethodFactory', [ErrorHandlerMethodFactory])
         .factory('alertsService', ['$rootScope', AlertsService])
@@ -11,7 +11,8 @@
         .directive('hMultiselect', ['hideoutConfig', MultiselectDirective])
         .directive('hModal', ['hideoutConfig', ModalDirective])
         .factory('modalService', ['$rootScope', ModalService])
-        .factory('i18n', [InternationalizationService]);
+        .factory('i18n', [InternationalizationService])
+        .factory('Resource', ['$resource', Resource]);
 
     function DateTimeDirective() {
 
@@ -173,23 +174,25 @@
                 if (value) {
                     label = value;
                 }
-            })
+            });
 
             $ctrl.$isEmpty = function (value) {
                 if (!value) {
                     return true;
                 }
 
-                if (_.isArray(value) && value.length == 0) {
-                    return true;
-                }
+                return _.isArray(value) && value.length == 0 ;
+            };
 
-                return false;
+            $ctrl.$render = function(){
+                if(!$ctrl.$viewValue) return;
+
+                $scope.selectedElements = $ctrl.$viewValue;
             };
 
             $scope.select = function () {
                 _.each($scope.toBeSelected, function (element) {
-                    $scope.selectedElements.push(element)
+                    $scope.selectedElements.push(element);
                     $ctrl.$setViewValue($scope.selectedElements)
                 });
             };
@@ -221,10 +224,14 @@
     }
 
     function ArrayDifferenceFilter() {
-        return function (inputArray, outputArray) {
+        return function (inputArray, outputArray, idFieldName) {
             return _.filter(inputArray, function (inElement) {
                 return !_.find(outputArray, function (outElement) {
-                    return inElement === outElement;
+                    if(idFieldName) {
+                        return inElement[idFieldName] === outElement[idFieldName];
+                    } else {
+                        return inElement === outElement;
+                    }
                 })
             });
         }
@@ -279,4 +286,26 @@
         return hideoutI18n;
     }
 
+    function Resource( $resource ) {
+        return function( url, params, methods ) {
+            var defaults = {
+                update: { method: 'put', isArray: false },
+                create: { method: 'post' }
+            };
+
+            methods = angular.extend( defaults, methods );
+
+            var resource = $resource( url, params, methods );
+
+            resource.prototype.$save = function() {
+                if ( !this.id ) {
+                    return this.$create();
+                } else {
+                    return this.$update();
+                }
+            };
+
+            return resource;
+        };
+    }
 }();
