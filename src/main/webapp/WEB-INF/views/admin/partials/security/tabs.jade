@@ -1,7 +1,7 @@
 tabset
     tab(heading="#{i18n['admin.security.tab.users']}", active="tabsActivation['users']")
         .h-sec-main-panel(ng-controller="AccountController")
-            button.btn.btn-primary.pull-right(type="button", ui-sref="security.addUser")
+            button.btn.btn-primary.pull-right(type="button", ui-sref="security.userPanel")
                 span.glyphicon.glyphicon-plus-sign &nbsp;#{i18n['admin.security.users.controls.add']}
             .clearfix
             table.table.table-striped.table-hover(ng-table="tableParams", style="margin-top: 30px")
@@ -23,6 +23,17 @@ tabset
                         span(ng-repeat="role in account.roles")
                             span {{ role.authority }}
                             span(ng-if="!$first") ,
+                    td(data-title="'#{i18n['admin.security.table.actions']}'")
+                        .btn-group
+                            button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown")
+                                #{i18n['admin.security.table.actions']}&nbsp;
+                                span.caret
+                            ul.dropdown-menu(role="menu")
+                                li
+                                    a(href="#", ui-sref="security.userPanel({id: account.id})")
+                                        #{i18n['admin.security.table.actions.edit']}
+                                    a(href="#", ng-click="delete(account.id)") #{i18n['admin.security.table.actions.delete']}
+
         .clearfix
     tab(heading="#{i18n['admin.security.tab.groups']}", active="tabsActivation['groups']")
         .h-sec-main-panel(ng-controller="GroupController")

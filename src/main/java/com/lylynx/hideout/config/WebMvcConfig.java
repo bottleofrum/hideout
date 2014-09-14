@@ -1,6 +1,7 @@
 package com.lylynx.hideout.config;
 
 import com.lylynx.hideout.error.ExceptionHandler;
+import com.lylynx.hideout.spring.messages.ExposedReloadableResourceBundleMessageSource;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -37,7 +38,7 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
 
     @Bean(name = "messageSource")
     public MessageSource messageSource() {
-        ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
+        ReloadableResourceBundleMessageSource messageSource = new ExposedReloadableResourceBundleMessageSource();
         messageSource.setBasename(MESSAGE_SOURCE);
         messageSource.setCacheSeconds(5);
         return messageSource;

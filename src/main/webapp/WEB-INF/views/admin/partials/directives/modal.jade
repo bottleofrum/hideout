@@ -1,0 +1,15 @@
+#hideoutModalDialog.modal(tabindex="-1", role="dialog", aria-labelledby="hideoutModalDialogLabel")
+    .modal-dialog
+        .modal-content
+            .modal-header
+                button.close(type="button", data-dismiss="modal", ng-switch="type")
+                    span(aria-hidden="true")&times;
+                    span.sr-only(ng-switch-when="confirm") #{i18n['admin.modal.button.cancel']}
+                    span.sr-only(ng-switch-default) #{i18n['admin.modal.button.close']}
+                h4#hideoutModalDialogLabel.modal-title {{ title }}
+            .modal-body
+                {{ message }}
+            .modal-footer(ng-switch="type")
+                button.btn.btn-default(type="button", data-dismiss="modal", ng-switch-when="confirm") #{i18n['admin.modal.button.cancel']}
+                button.btn.btn-primary(type="button", data-dismiss="modal", ng-switch-when="confirm", ng-click="acceptHandler()") #{i18n['admin.modal.button.accept']}
+                button.btn.btn-default(type="button", data-dismiss="modal", ng-switch-default) #{i18n['admin.modal.button.close']}

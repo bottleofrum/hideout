@@ -9,7 +9,7 @@ html
         script(src="#{url.url('/admin/resources/libs/jquery.min.js')}")
         script(src="#{url.url('/admin/resources/libs/bootstrap.min.js')}")
         script
-            var hideoutConfig = {baseUrl: "#{url.url('/')}", consoleBaseUrl:"#{url.url('/.console')}", restUrl: "#{url.url('/r')}"};
+            var hideoutConfig = {baseUrl: "#{url.url('/')}", consoleBaseUrl:"#{url.url('/.console')}", restUrl: "#{url.url('/r')}"};var hideoutI18n = !{i18n.toString()};
     body(ng-app="hideout")
         .navbar.navbar-default.navbar-fixed-top(role="navigation")
             .container
@@ -27,6 +27,7 @@ html
                 .h-alert-pane
                     div(h-alert, ng-repeat="alert in _hideoutAlerts", id="{{alert.id}}", type="{{alert.type}}",
                     message="{{alert.message}}")
+            div(h-modal, title="_hideoutModal.title",type="_hideoutModal.type", message="_hideoutModal.message", on-accept="_hideoutModal.onAccept()")
             .row(ui-view)
         script(src="#{url.url('/admin/resources/libs/underscore-min.js')}")
         script(src="#{url.url('/admin/resources/libs/angular.js')}")

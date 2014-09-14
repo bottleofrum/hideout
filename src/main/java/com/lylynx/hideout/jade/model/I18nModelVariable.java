@@ -1,5 +1,6 @@
 package com.lylynx.hideout.jade.model;
 
+import com.lylynx.hideout.spring.messages.ExposedReloadableResourceBundleMessageSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -25,5 +26,28 @@ public class I18nModelVariable extends AbstractMapAdapter{
     public Object get(final Object key) {
         final Locale locale = RequestContextUtils.getLocale(request);
         return messageSource.getMessage((String)key, null, (String)key, locale);
+    }
+
+    @Override
+    public String toString() {
+        final Locale locale = RequestContextUtils.getLocale(request);
+        ExposedReloadableResourceBundleMessageSource messages = (ExposedReloadableResourceBundleMessageSource) messageSource;
+
+        StringBuilder stringBuilder = new StringBuilder("{");
+        boolean first = true;
+
+        for(Entry<Object, Object> entry: messages.getProperties(locale).entrySet()) {
+            if(!first) {
+                stringBuilder.append(",");
+            } else {
+                first = false;
+            }
+
+            stringBuilder.append("\"").append(entry.getKey()).append("\":\"").append(entry.getValue()).append("\"");
+
+        }
+        stringBuilder.append("}");
+
+        return stringBuilder.toString();
     }
 }

@@ -21,7 +21,7 @@ function init(host, port, database) {
     this.enabled = true;
   }
 
-  mongo = new Mongo(host+':'+port);
+  mongo = new Mongo();
   db = mongo.getDB(database);
 
   collecions = ['security-web-access','security-roles','security-groups','security-users'];
