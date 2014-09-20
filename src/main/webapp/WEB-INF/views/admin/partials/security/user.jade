@@ -18,12 +18,32 @@
                     input.form-control(name="repeatedPassword", ng-model="model.repeatedPassword", server-error, type="password")
                     div(errors-printer="repeatedPassword")
             .form-group
-                label.col-sm-4.control-label Groups
+                label.col-sm-4.control-label #{i18n['admin.security.users.form.accountExpirationDate']}
+                .col-sm-8
+                    p.input-group
+                        input.form-control(name="accountExpirationDate", ng-model="model.accountExpirationDate", server-error,
+                        datepicker-popup, is-open="dateAccountExpirationPopupOpened")
+                        span.input-group-btn
+                            button.btn.btn-default(type="button", ng-click="openAccountExpirationDatePopup($event)")
+                                i.glyphicon.glyphicon-calendar
+                    div(errors-printer="accountExpirationDate")
+            .form-group
+                label.col-sm-4.control-label #{i18n['admin.security.users.form.credentialsExpirationDate']}
+                .col-sm-8
+                    p.input-group
+                        input.form-control(name="credentialsExpirationDate", ng-model="model.credentialsExpirationDate", server-error,
+                        datepicker-popup, is-open="dateCredentialsExpirationPopupOpened")
+                        span.input-group-btn
+                            button.btn.btn-default(type="button", ng-click="openCredentialsExpirationDatePopup($event)")
+                                i.glyphicon.glyphicon-calendar
+                    div(errors-printer="credentialsExpirationDate")
+            .form-group
+                label.col-sm-4.control-label #{i18n['admin.security.users.form.groups']}
                 .col-sm-8
                     div(name="groups", h-multiselect="groups", ng-model="model.groups", server-error)
                     div(errors-printer="groups")
             .form-group
-                label.col-sm-4.control-label Roles
+                label.col-sm-4.control-label #{i18n['admin.security.users.form.roles']}
                 .col-sm-8
                     div(name="roles", h-multiselect="roles", ng-model="model.roles", label="authority", server-error)
                     div(errors-printer="roles")

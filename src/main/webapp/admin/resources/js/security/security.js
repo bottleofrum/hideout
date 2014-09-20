@@ -144,7 +144,21 @@
               $state.go('security');
           }, errorHandlerMethodFactory($scope));
       }
-    }
+    };
+
+    $scope.openAccountExpirationDatePopup = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.dateAccountExpirationPopupOpened = true;
+    };
+
+    $scope.openCredentialsExpirationDatePopup = function($event) {
+        $event.preventDefault();
+        $event.stopPropagation();
+
+        $scope.dateCredentialsExpirationPopupOpened = true;
+    };
 
   }
 
