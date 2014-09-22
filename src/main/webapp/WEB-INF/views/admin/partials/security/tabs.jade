@@ -37,17 +37,37 @@ tabset
         .clearfix
     tab(heading="#{i18n['admin.security.tab.groups']}", active="tabsActivation['groups']")
         .h-sec-main-panel(ng-controller="GroupController")
-            button.btn.btn-primary.pull-right(type="button", ui-sref="security.addUser")
+            button.btn.btn-primary.pull-right(type="button", ui-sref="security.groupPanel")
                 span.glyphicon.glyphicon-plus-sign &nbsp;#{i18n['admin.security.groups.controls.add']}
             .clearfix
             table.table.table-striped.table-hover(ng-table="tableParams", style="margin-top: 30px")
                 tr(ng-repeat="group in $data")
                     td(data-title="'#{i18n['admin.security.groups.table.name']}'") {{group.name}}
+                    td(data-title="'#{i18n['admin.security.table.actions']}'")
+                        .btn-group
+                            button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown")
+                                #{i18n['admin.security.table.actions']}&nbsp;
+                                span.caret
+                            ul.dropdown-menu(role="menu")
+                                li
+                                    a(href="#", ui-sref="security.groupPanel({id: group.id})")
+                                        #{i18n['admin.security.table.actions.edit']}
+                                    a(href="#", ng-click="delete(group.id)") #{i18n['admin.security.table.actions.delete']}
     tab(heading="#{i18n['admin.security.tab.roles']}", active="tabsActivation['roles']")
         .h-sec-main-panel(ng-controller="RoleController")
-            button.btn.btn-primary.pull-right(type="button", ui-sref="security.addUser")
+            button.btn.btn-primary.pull-right(type="button", ui-sref="security.rolePanel")
                 span.glyphicon.glyphicon-plus-sign &nbsp;#{i18n['admin.security.roles.controls.add']}
             .clearfix
             table.table.table-striped.table-hover(ng-table="tableParams", style="margin-top: 30px")
                 tr(ng-repeat="role in $data")
                     td(data-title="'#{i18n['admin.security.roles.table.name']}'") {{role.authority}}
+                    td(data-title="'#{i18n['admin.security.table.actions']}'")
+                        .btn-group
+                            button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown")
+                                #{i18n['admin.security.table.actions']}&nbsp;
+                                span.caret
+                            ul.dropdown-menu(role="menu")
+                                li
+                                    a(href="#", ui-sref="security.rolePanel({id: role.id})")
+                                        #{i18n['admin.security.table.actions.edit']}
+                                    a(href="#", ng-click="delete(role.id)") #{i18n['admin.security.table.actions.delete']}

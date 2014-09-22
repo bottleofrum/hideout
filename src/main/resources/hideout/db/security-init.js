@@ -48,7 +48,7 @@ function init(host, port, database) {
 
   role = db.getCollection('security-roles');
 
-  role.insert({role: 'SUPERADMIN'});
+  role.insert({authority: 'SUPERADMIN'});
 
   group = db.getCollection('security-groups');
 

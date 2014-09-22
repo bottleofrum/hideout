@@ -9,4 +9,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * Time: 22:11
  */
 public interface RoleRepository extends MongoRepository<HideoutGrantedAuthority, String> {
+
+    HideoutGrantedAuthority findOneByAuthority(String authority);
+
 }

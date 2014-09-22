@@ -1,0 +1,17 @@
+.col-sm-6
+    h3(ng-if="!editMode") #{i18n['admin.security.roles.controls.add']}
+    h3(ng-if="editMode") #{i18n['admin.security.roles.controls.edit']}
+    .row
+        form.form-horizontal(novalidate,name="form",ng-submit="save()")
+            .form-group
+                label.col-sm-4.control-label #{i18n['admin.security.roles.form.name']}
+                .col-sm-8
+                    input.form-control(name="authority", ng-model="model.authority", server-error)
+                    div(errors-printer="authority")
+            .form-group
+                .col-sm-offset-4.col-sm-8
+                    .pull-right
+                        button.btn.btn-default(type="button", ui-sref="security") Cancel
+                        span &nbsp;
+                        button.btn.btn-primary(type="submit") Submit
+                    .clearfix

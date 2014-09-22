@@ -9,6 +9,10 @@
     .controller('RoleController', ['$scope', 'RoleResource', 'ngTableParams', 'alertsService', 'modalService', 'i18n', ResourceController])
     .controller('UserController', ['$scope', 'AccountResource', 'errorHandlerMethodFactory', 'alertsService', '$state',
       'GroupResource', 'RoleResource', 'i18n', '$stateParams', UserController])
+    .controller('GroupPanelController', ['$scope', 'GroupResource', '$stateParams', 'alertsService', '$state','errorHandlerMethodFactory',
+          'i18n', 'RoleResource', GroupPanelController])
+    .controller('RolePanelController', ['$scope', 'RoleResource', '$stateParams', 'alertsService', '$state','errorHandlerMethodFactory',
+          'i18n', RolePanelController])
     .config(['hideoutConfig', '$stateProvider', Config]);
 
   function Config(hideoutConfig, $stateProvider) {
@@ -32,6 +36,24 @@
           '' : {
             templateUrl: hideoutConfig.consoleBaseUrl + "/.partials/security/user",
             controller: 'UserController'
+          }
+        }
+      })
+      .state('security.groupPanel', {
+        params: ['id','tab'],
+        views: {
+          '' : {
+            templateUrl: hideoutConfig.consoleBaseUrl + "/.partials/security/group",
+            controller: 'GroupPanelController'
+          }
+        }
+      })
+      .state('security.rolePanel', {
+        params: ['id','tab'],
+        views: {
+          '' : {
+            templateUrl: hideoutConfig.consoleBaseUrl + "/.partials/security/role",
+            controller: 'RolePanelController'
           }
         }
       });
@@ -160,6 +182,76 @@
         $scope.dateCredentialsExpirationPopupOpened = true;
     };
 
+  }
+
+  function GroupPanelController($scope, GroupResource, $stateParams, alertsService, $state, errorHandlerMethodFactory, i18n, RoleResource) {
+
+      $scope.model = {
+          name: null,
+          authorities: null
+      };
+
+      RoleResource.get({page: 0, size: 10000000}, function (response) {
+          $scope.roles = response.content;
+      });
+
+      if($stateParams.id) {
+          $scope.model = GroupResource.get({id: $stateParams.id});
+          $scope.editMode = true;
+      }
+
+      $scope.save = function(){
+          if($scope.editMode) {
+              GroupResource.update({id: $scope.model.id}, $scope.model).$promise.then(function () {
+                  alertsService.add({
+                      type:'success',
+                      message:i18n['admin.security.message.group.updated']
+                  });
+                  $state.go('security');
+              }, errorHandlerMethodFactory($scope));
+          } else {
+              GroupResource.create($scope.model).$promise.then(function () {
+                  alertsService.add({
+                      type:'success',
+                      message:i18n['admin.security.message.group.created']
+                  });
+                  $state.go('security');
+              }, errorHandlerMethodFactory($scope));
+          }
+      };
+
+  }
+
+  function RolePanelController($scope, RoleResource, $stateParams, alertsService, $state, errorHandlerMethodFactory, i18n) {
+
+      $scope.model = {
+          authority: null
+      };
+
+      if($stateParams.id) {
+          $scope.model = RoleResource.get({id: $stateParams.id});
+          $scope.editMode = true;
+      }
+
+      $scope.save = function(){
+          if($scope.editMode) {
+              RoleResource.update({id: $scope.model.id}, $scope.model).$promise.then(function () {
+                  alertsService.add({
+                      type:'success',
+                      message:i18n['admin.security.message.role.updated']
+                  });
+                  $state.go('security');
+              }, errorHandlerMethodFactory($scope));
+          } else {
+              RoleResource.create($scope.model).$promise.then(function () {
+                  alertsService.add({
+                      type:'success',
+                      message:i18n['admin.security.message.role.created']
+                  });
+                  $state.go('security');
+              }, errorHandlerMethodFactory($scope));
+          }
+      };
   }
 
 

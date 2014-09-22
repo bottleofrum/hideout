@@ -2,16 +2,25 @@ package com.lylynx.hideout.spring.security.user;
 
 
 import com.lylynx.hideout.config.Constants;
+import com.lylynx.hideout.spring.security.user.validators.UniqueRoleName;
 import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
 @Document(collection = Constants.SECURITY_ROLES)
 @JsonDeserialize
+@UniqueRoleName
 public class HideoutGrantedAuthority implements GrantedAuthority{
 
+    @Id
     private String id;
-    private String role;
+
+    @Indexed(unique = true)
+    @NotEmpty
+    private String authority;
 
     public String getId() {
         return id;
@@ -22,11 +31,11 @@ public class HideoutGrantedAuthority implements GrantedAuthority{
     }
 
     public void setAuthority(final String role) {
-        this.role = role;
+        this.authority = role;
     }
 
     @Override
     public String getAuthority() {
-        return role;
+        return authority;
     }
 }

@@ -16,6 +16,7 @@ import javax.validation.ConstraintValidatorContext;
 public class UniqueUsernameValidator implements ConstraintValidator<UniqueUsername, Account> {
 
     private static final String MESSAGE_CODE = "{com.lylynx.hideout.spring.security.user.validators.UniqueUsername.message}";
+
     @Autowired
     private AccountRepository accountRepository;
 
