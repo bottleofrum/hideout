@@ -28,6 +28,10 @@ body {
     opacity: 1;
 }
 
+.h-table-actions-cell {
+    width: 40px;
+}
+
 /*MULTISELECT*/
 
 .h-multiselect-pane {
