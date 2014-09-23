@@ -18,11 +18,11 @@ tabset
                     td(data-title="'#{i18n['admin.security.users.table.groups']}'")
                         span(ng-repeat="group in account.groups")
                             span {{ group.name }}
-                            span(ng-if="!$first") ,
+                            span(ng-if="!$last") ,
                     td(data-title="'#{i18n['admin.security.users.table.roles']}'")
                         span(ng-repeat="role in account.roles")
                             span {{ role.authority }}
-                            span(ng-if="!$first") ,
+                            span(ng-if="!$last") ,
                     td.h-table-actions-cell(data-title="'#{i18n['admin.security.table.actions']}'")
                         .btn-group
                             button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown")
@@ -43,6 +43,10 @@ tabset
             table.table.table-striped.table-hover(ng-table="tableParams", style="margin-top: 30px")
                 tr(ng-repeat="group in $data")
                     td(data-title="'#{i18n['admin.security.groups.table.name']}'") {{group.name}}
+                    td(data-title="'#{i18n['admin.security.groups.table.roles']}'")
+                        span(ng-repeat="role in group.authorities")
+                            span {{ role.authority }}
+                            span(ng-if="!$last") ,
                     td.h-table-actions-cell(data-title="'#{i18n['admin.security.table.actions']}'")
                         .btn-group
                             button.btn.btn-default.dropdown-toggle(type="button", data-toggle="dropdown")
