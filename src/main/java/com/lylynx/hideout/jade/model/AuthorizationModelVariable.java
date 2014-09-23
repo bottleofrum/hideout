@@ -9,7 +9,7 @@ public class AuthorizationModelVariable {
 
     public boolean isAuthenticated() {
         final Authentication authentication = getAuthentication();
-        if(null == authentication || authentication instanceof AnonymousAuthenticationToken) {
+        if (null == authentication || authentication instanceof AnonymousAuthenticationToken) {
             return false;
         }
 

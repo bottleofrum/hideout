@@ -11,7 +11,7 @@ import java.util.Date;
  * Date: 26.07.14
  * Time: 22:12
  */
-public class DateTimeToDateConverter implements Converter<DateTime, Date>{
+public class DateTimeToDateConverter implements Converter<DateTime, Date> {
 
     @Override
     public Date convert(final DateTime source) {

@@ -17,12 +17,12 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] {MongoConfig.class, SecurityConfig.class};
+        return new Class<?>[]{MongoConfig.class, SecurityConfig.class};
     }
 
     @Override
     protected Class<?>[] getServletConfigClasses() {
-        return new Class<?>[] {WebMvcConfig.class, JadeConfig.class, ApplicationConfig.class};
+        return new Class<?>[]{WebMvcConfig.class, JadeConfig.class, ApplicationConfig.class};
     }
 
     @Override
@@ -34,7 +34,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         DelegatingFilterProxy securityFilterChain = new DelegatingFilterProxy
                 (AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME);
 
-        return new Filter[] {characterEncodingFilter, securityFilterChain};
+        return new Filter[]{characterEncodingFilter, securityFilterChain};
     }
 
     @Override

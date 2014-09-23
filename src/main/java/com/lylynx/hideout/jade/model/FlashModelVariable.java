@@ -12,7 +12,7 @@ import java.util.Map;
  * Date: 06.07.14
  * Time: 01:31
  */
-public class FlashModelVariable extends AbstractMapAdapter{
+public class FlashModelVariable extends AbstractMapAdapter {
 
     @Autowired
     private HttpServletRequest request;
@@ -20,7 +20,7 @@ public class FlashModelVariable extends AbstractMapAdapter{
     @Override
     public Object get(final Object key) {
         final Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
-        if(null == inputFlashMap){
+        if (null == inputFlashMap) {
             return null;
         }
 

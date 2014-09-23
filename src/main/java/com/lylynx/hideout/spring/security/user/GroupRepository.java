@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * Date: 28.07.14
  * Time: 22:08
  */
-public interface GroupRepository extends MongoRepository<Group, String>{
+public interface GroupRepository extends MongoRepository<Group, String> {
 
     Group findOneByName(String name);
 

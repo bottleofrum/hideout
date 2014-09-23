@@ -30,10 +30,12 @@ public abstract class RestControllerSupport {
     }
 
     @ExceptionHandler
-    public @ResponseBody ResponseEntity<? extends Object> validationErrors(MethodArgumentNotValidException exception) {
+    public
+    @ResponseBody
+    ResponseEntity<? extends Object> validationErrors(MethodArgumentNotValidException exception) {
         final BindingResult bindingResult = exception.getBindingResult();
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
-            errorsBuilder.add(fieldError.getField(),fieldError.getDefaultMessage());
+            errorsBuilder.add(fieldError.getField(), fieldError.getDefaultMessage());
         }
         ResponseEntity<? extends Object> responseEntity = new ResponseEntity<>(errorsBuilder.build(),
                 HttpStatus.BAD_REQUEST);
@@ -41,8 +43,10 @@ public abstract class RestControllerSupport {
     }
 
     @ExceptionHandler
-    public @ResponseBody ResponseEntity<? extends Object> conversionErrors(HttpMessageNotReadableException exception, Locale locale) throws Throwable {
-        if(!(exception.getCause() instanceof JsonMappingException)) {
+    public
+    @ResponseBody
+    ResponseEntity<? extends Object> conversionErrors(HttpMessageNotReadableException exception, Locale locale) throws Throwable {
+        if (!(exception.getCause() instanceof JsonMappingException)) {
             throw exception.getCause();
         }
 
@@ -58,7 +62,9 @@ public abstract class RestControllerSupport {
     }
 
     @ExceptionHandler
-    public @ResponseBody ResponseEntity<? extends Object> errors(Exception exception) throws Throwable {
+    public
+    @ResponseBody
+    ResponseEntity<? extends Object> errors(Exception exception) throws Throwable {
         ResponseEntity<? extends Object> responseEntity = new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         return responseEntity;
     }

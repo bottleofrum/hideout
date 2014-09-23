@@ -51,7 +51,7 @@ class ApplicationConfig {
 
     @Bean
     public SignupController signupController(final AccountRepository accountRepository, final UserDetailsService userDetailsService,
-            final PasswordEncoder passwordEncoder) {
+                                             final PasswordEncoder passwordEncoder) {
         return new SignupController(accountRepository, userDetailsService, passwordEncoder);
     }
 
@@ -62,15 +62,15 @@ class ApplicationConfig {
     }
 
     @Bean
-    public GroupController groupController(ErrorsBuilder errorsBuilder,GroupRepository groupRepository) {
+    public GroupController groupController(ErrorsBuilder errorsBuilder, GroupRepository groupRepository) {
         return new GroupController(errorsBuilder, groupRepository);
     }
 
     @Bean
-    public RoleController roleController(ErrorsBuilder errorsBuilder,RoleRepository roleRepository) {
+    public RoleController roleController(ErrorsBuilder errorsBuilder, RoleRepository roleRepository) {
         return new RoleController(errorsBuilder, roleRepository);
     }
-    
+
     @Bean
     public CustomErrorController customErrorController() {
         return new CustomErrorController();
@@ -78,7 +78,7 @@ class ApplicationConfig {
 
     // SERVICES
     @Bean
-    @Scope(value =WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
+    @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
     public ErrorsBuilder errorsBuilder(MessageSource messageSource) {
         return new ErrorsBuilder(messageSource);
     }

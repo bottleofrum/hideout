@@ -1,6 +1,5 @@
 package com.lylynx.hideout.spring.security.user.validators;
 
-import com.lylynx.hideout.spring.security.user.Account;
 import com.lylynx.hideout.spring.security.user.Group;
 import com.lylynx.hideout.spring.security.user.GroupRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ public class UniqueGroupNameValidator implements ConstraintValidator<UniqueGroup
     public boolean isValid(Group entity, ConstraintValidatorContext context) {
 
         final Group group = groupRepository.findOneByName(entity.getName());
-        if(null == group || group.getId().equals(entity.getId())) {
+        if (null == group || group.getId().equals(entity.getId())) {
             return true;
         }
 

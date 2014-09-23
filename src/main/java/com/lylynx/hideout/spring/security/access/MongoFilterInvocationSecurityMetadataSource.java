@@ -28,7 +28,7 @@ public class MongoFilterInvocationSecurityMetadataSource implements FilterInvoca
 
         final List<WebAccesRule> webAccesRules = webAccessRuleRepository.findAll();
         for (WebAccesRule webAccesRule : webAccesRules) {
-            if(webAccesRule.requestMatcher().matches(fi.getRequest())) {
+            if (webAccesRule.requestMatcher().matches(fi.getRequest())) {
                 return webAccesRule.configAttributes();
             }
         }

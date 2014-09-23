@@ -11,7 +11,7 @@ import java.util.Locale;
 /**
  * Created with IntelliJ IDEA. User: kuba Date: 30.06.14 Time: 21:03
  */
-public class I18nModelVariable extends AbstractMapAdapter{
+public class I18nModelVariable extends AbstractMapAdapter {
 
     @Autowired
     private HttpServletRequest request;
@@ -25,7 +25,7 @@ public class I18nModelVariable extends AbstractMapAdapter{
     @Override
     public Object get(final Object key) {
         final Locale locale = RequestContextUtils.getLocale(request);
-        return messageSource.getMessage((String)key, null, (String)key, locale);
+        return messageSource.getMessage((String) key, null, (String) key, locale);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class I18nModelVariable extends AbstractMapAdapter{
         StringBuilder stringBuilder = new StringBuilder("{");
         boolean first = true;
 
-        for(Entry<Object, Object> entry: messages.getProperties(locale).entrySet()) {
-            if(!first) {
+        for (Entry<Object, Object> entry : messages.getProperties(locale).entrySet()) {
+            if (!first) {
                 stringBuilder.append(",");
             } else {
                 first = false;

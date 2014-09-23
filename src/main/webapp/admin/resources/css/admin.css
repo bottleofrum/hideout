@@ -19,6 +19,7 @@ body {
 .fade {
     opacity: 0;
 }
+
 .fade.in {
     -webkit-transition: opacity 3.0s linear;
     -moz-transition: opacity 3.0s linear;

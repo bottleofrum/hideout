@@ -28,7 +28,7 @@ public class UniqueUsernameValidator implements ConstraintValidator<UniqueUserna
     @Override
     public boolean isValid(final Account entity, final ConstraintValidatorContext context) {
         final Account account = accountRepository.findOneByUsername(entity.getUsername());
-        if(null == account || account.getId().equals(entity.getId())) {
+        if (null == account || account.getId().equals(entity.getId())) {
             return true;
         }
 

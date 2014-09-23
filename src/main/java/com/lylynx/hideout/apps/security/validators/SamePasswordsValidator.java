@@ -11,7 +11,7 @@ import javax.validation.ConstraintValidatorContext;
  * Date: 29.07.14
  * Time: 23:33
  */
-public class SamePasswordsValidator implements ConstraintValidator<SamePasswords, AccountDTO>{
+public class SamePasswordsValidator implements ConstraintValidator<SamePasswords, AccountDTO> {
 
     public static final String MESSAGE_CODE = "{com.lylynx.hideout.apps.security.validators.SamePasswords.message}";
 
@@ -26,9 +26,9 @@ public class SamePasswordsValidator implements ConstraintValidator<SamePasswords
         String password = value.getPassword();
         String password2 = value.getRepeatedPassword();
 
-        if(null == password && null == password2) {
+        if (null == password && null == password2) {
             return true;
-        } else if( null == password || null == password2 || !password.equals(password2)) {
+        } else if (null == password || null == password2 || !password.equals(password2)) {
             context.buildConstraintViolationWithTemplate(MESSAGE_CODE)
                     .addNode("password").addConstraintViolation();
             context.buildConstraintViolationWithTemplate(MESSAGE_CODE)

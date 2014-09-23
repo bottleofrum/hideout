@@ -111,7 +111,7 @@ public class Account {
 
     @JsonIgnore
     public boolean isAccountNonExpired() {
-        if(null == accountExpirationDate) {
+        if (null == accountExpirationDate) {
             return true;
         }
 
@@ -120,7 +120,7 @@ public class Account {
 
     @JsonIgnore
     public boolean isCredentialsNonExpired() {
-        if(null == credentialsExpirationDate) {
+        if (null == credentialsExpirationDate) {
             return true;
         }
 

@@ -13,7 +13,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Document(collection = Constants.SECURITY_ROLES)
 @JsonDeserialize
 @UniqueRoleName
-public class HideoutGrantedAuthority implements GrantedAuthority{
+public class HideoutGrantedAuthority implements GrantedAuthority {
 
     @Id
     private String id;
@@ -30,12 +30,12 @@ public class HideoutGrantedAuthority implements GrantedAuthority{
         this.id = id;
     }
 
-    public void setAuthority(final String role) {
-        this.authority = role;
-    }
-
     @Override
     public String getAuthority() {
         return authority;
+    }
+
+    public void setAuthority(final String role) {
+        this.authority = role;
     }
 }

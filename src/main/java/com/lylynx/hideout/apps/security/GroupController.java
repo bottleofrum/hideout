@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/r/security/group")
-public class GroupController extends CrudController<Group>{
+public class GroupController extends CrudController<Group> {
 
     public GroupController(final ErrorsBuilder errorsBuilder, GroupRepository repository) {
         super(errorsBuilder, repository);

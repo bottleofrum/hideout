@@ -8,7 +8,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * Date: 29.06.14
  * Time: 16:59
  */
-public interface AccountRepository extends MongoRepository<Account,String>{
+public interface AccountRepository extends MongoRepository<Account, String> {
 
     Account findOneByUsername(String username);
 }

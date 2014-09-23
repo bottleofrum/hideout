@@ -14,7 +14,7 @@ import java.util.Map;
  * Date: 05.07.14
  * Time: 21:55
  */
-public class JadeConfiguration extends de.neuland.jade4j.JadeConfiguration{
+public class JadeConfiguration extends de.neuland.jade4j.JadeConfiguration {
 
     @Override
     public void renderTemplate(final JadeTemplate template, final Map<String, Object> model, final Writer writer) throws JadeCompilerException {
@@ -25,7 +25,7 @@ public class JadeConfiguration extends de.neuland.jade4j.JadeConfiguration{
     }
 
     private Map<String, Object> addResultBindingsModelVariable(final Map<String, Object> model) {
-        if(null == model || model.isEmpty()) {
+        if (null == model || model.isEmpty()) {
             Map<String, Object> newModel = new HashMap<>();
             newModel.put("form", new FormModelVariable(newModel));
             return newModel;

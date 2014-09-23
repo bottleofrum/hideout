@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
  * Date: 05.07.14
  * Time: 15:38
  */
-public class RequestParamModelVariable extends AbstractMapAdapter{
+public class RequestParamModelVariable extends AbstractMapAdapter {
     @Autowired
     private HttpServletRequest request;
 

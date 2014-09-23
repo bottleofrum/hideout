@@ -16,11 +16,11 @@ public class UrlModelVariable {
     private HttpServletRequest request;
 
     public String url(String url) {
-        if(null == url) {
+        if (null == url) {
             return null;
         }
 
-        if(url.startsWith("/")) {
+        if (url.startsWith("/")) {
             return request.getContextPath() + url;
         }
 

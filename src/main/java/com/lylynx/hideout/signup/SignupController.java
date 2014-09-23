@@ -17,11 +17,8 @@ import javax.validation.Valid;
 public class SignupController {
 
     private static final String SIGNUP_VIEW_NAME = "signup/signup";
-
-	private AccountRepository accountRepository;
-
-
     private final UserDetailsService userService;
+    private AccountRepository accountRepository;
     private PasswordEncoder passwordEncoder;
 
     public SignupController(final AccountRepository accountRepository, final UserDetailsService userService,
@@ -32,14 +29,14 @@ public class SignupController {
     }
 
     @RequestMapping(value = "signup")
-	public String signup(Model model) {
-		model.addAttribute(new SignupForm());
+    public String signup(Model model) {
+        model.addAttribute(new SignupForm());
         return SIGNUP_VIEW_NAME;
-	}
-	
-	@RequestMapping(value = "signup", method = RequestMethod.POST)
-	public String signup(@Valid @ModelAttribute SignupForm signupForm, Errors errors, RedirectAttributes ra) {
-		/*if (errors.hasErrors()) {
+    }
+
+    @RequestMapping(value = "signup", method = RequestMethod.POST)
+    public String signup(@Valid @ModelAttribute SignupForm signupForm, Errors errors, RedirectAttributes ra) {
+        /*if (errors.hasErrors()) {
 			return SIGNUP_VIEW_NAME;
 		}
 		Account account = accountRepository.save(signupForm.createAccount(passwordEncoder));
@@ -48,5 +45,5 @@ public class SignupController {
 		return "redirect:/";*/
 
         throw new RuntimeException();
-	}
+    }
 }

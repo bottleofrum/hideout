@@ -17,7 +17,7 @@ public @interface SamePasswords {
 
     String message() default "{com.lylynx.hideout.apps.security.validators.SamePasswords.message}";
 
-    Class<?>[] groups() default { };
+    Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 

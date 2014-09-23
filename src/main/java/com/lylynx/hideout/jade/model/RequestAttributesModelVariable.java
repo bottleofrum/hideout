@@ -11,18 +11,18 @@ import javax.servlet.http.HttpServletRequest;
  * Date: 05.07.14
  * Time: 16:55
  */
-public class RequestAttributesModelVariable extends AbstractMapAdapter{
+public class RequestAttributesModelVariable extends AbstractMapAdapter {
 
     @Autowired
     private HttpServletRequest request;
 
     @Override
     public Object get(final Object key) {
-        if(null == key) {
+        if (null == key) {
             return null;
         }
 
-        if(key.equals("_csrf")) {
+        if (key.equals("_csrf")) {
             return request.getAttribute(CsrfToken.class.getName());
         }
 

@@ -32,7 +32,7 @@ public class ErrorsBuilder {
 
     private List<String> getErrorsMessagesForPath(final String fieldPath) {
         List<String> errorsMessages = errors.get(fieldPath);
-        if(null == errorsMessages) {
+        if (null == errorsMessages) {
             errorsMessages = new ArrayList<>();
             errors.put(fieldPath, errorsMessages);
         }

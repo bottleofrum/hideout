@@ -20,7 +20,12 @@ import java.util.List;
 
 @Configuration
 @EnableMongoRepositories("com.lylynx.hideout")
-class MongoConfig extends AbstractMongoConfiguration{
+class MongoConfig extends AbstractMongoConfiguration {
+
+    @Value("${mongo.host}")
+    private String mongoHost;
+    @Value("${mongo.port}")
+    private String mongoPort;
 
     @Bean
     public static PropertyPlaceholderConfigurer propertyPlaceholderConfigurer() {
@@ -28,12 +33,6 @@ class MongoConfig extends AbstractMongoConfiguration{
         ppc.setLocation(new ClassPathResource("/persistence.properties"));
         return ppc;
     }
-
-    @Value("${mongo.host}")
-    private String mongoHost;
-
-    @Value("${mongo.port}")
-    private String mongoPort;
 
     @Override
     protected String getDatabaseName() {

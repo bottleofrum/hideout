@@ -14,9 +14,9 @@ public class AdminPartialsController {
     public String getPartial(HttpServletRequest request) {
 
         final String pathInfo = request.getRequestURI().substring(request.getContextPath().length());
-        String partial = pathInfo.replace("/.console/.partials/","");
+        String partial = pathInfo.replace("/.console/.partials/", "");
 
-        return "admin/partials/"+partial;
+        return "admin/partials/" + partial;
     }
 
 }

@@ -1,6 +1,5 @@
 package com.lylynx.hideout.spring.security.user.validators;
 
-import com.lylynx.hideout.spring.security.user.Group;
 import com.lylynx.hideout.spring.security.user.HideoutGrantedAuthority;
 import com.lylynx.hideout.spring.security.user.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,7 @@ public class UniqueRoleNameValidator implements ConstraintValidator<UniqueRoleNa
     @Override
     public boolean isValid(HideoutGrantedAuthority entity, ConstraintValidatorContext context) {
         final HideoutGrantedAuthority role = roleRepository.findOneByAuthority(entity.getAuthority());
-        if(null == role || role.getId().equals(entity.getId())) {
+        if (null == role || role.getId().equals(entity.getId())) {
             return true;
         }
 

@@ -125,7 +125,7 @@
                     alerts = [];
                     $rootScope['_hideoutAlerts'] = alerts;
                 }
-                alert['id'] = '_hideoutAlert_'+Math.random();
+                alert['id'] = '_hideoutAlert_' + Math.random();
                 alerts.push(alert);
             },
             remove: function (id) {
@@ -181,11 +181,11 @@
                     return true;
                 }
 
-                return _.isArray(value) && value.length == 0 ;
+                return _.isArray(value) && value.length == 0;
             };
 
-            $ctrl.$render = function(){
-                if(!$ctrl.$viewValue) return;
+            $ctrl.$render = function () {
+                if (!$ctrl.$viewValue) return;
 
                 $scope.selectedElements = $ctrl.$viewValue;
             };
@@ -227,7 +227,7 @@
         return function (inputArray, outputArray, idFieldName) {
             return _.filter(inputArray, function (inElement) {
                 return !_.find(outputArray, function (outElement) {
-                    if(idFieldName) {
+                    if (idFieldName) {
                         return inElement[idFieldName] === outElement[idFieldName];
                     } else {
                         return inElement === outElement;
@@ -239,8 +239,8 @@
 
     function ModalDirective(hideoutConfig) {
         function LinkFunction($scope) {
-            $scope.acceptHandler = function() {
-                if($scope.onAccept) {
+            $scope.acceptHandler = function () {
+                if ($scope.onAccept) {
                     $scope.onAccept();
                 }
             }
@@ -248,10 +248,10 @@
 
         return {
             scope: {
-                type:"=",//confirm, info
-                title:"=",
-                message:"=",
-                onAccept:"&"
+                type: "=",//confirm, info
+                title: "=",
+                message: "=",
+                onAccept: "&"
             },
             templateUrl: hideoutConfig.consoleBaseUrl + '/.partials/directives/modal',
             link: LinkFunction
@@ -260,18 +260,18 @@
 
     function ModalService($rootScope) {
         return {
-            info : function(title, message){
+            info: function (title, message) {
                 $rootScope['_hideoutModal'] = {
-                    type:'info',
+                    type: 'info',
                     title: title,
                     message: message
                 };
 
                 $("#hideoutModalDialog").modal();
             },
-            confirm : function(title, message, onAccept){
+            confirm: function (title, message, onAccept) {
                 $rootScope['_hideoutModal'] = {
-                    type:'confirm',
+                    type: 'confirm',
                     title: title,
                     message: message,
                     onAccept: onAccept
@@ -286,19 +286,19 @@
         return hideoutI18n;
     }
 
-    function Resource( $resource ) {
-        return function( url, params, methods ) {
+    function Resource($resource) {
+        return function (url, params, methods) {
             var defaults = {
                 update: { method: 'put', isArray: false },
                 create: { method: 'post' }
             };
 
-            methods = angular.extend( defaults, methods );
+            methods = angular.extend(defaults, methods);
 
-            var resource = $resource( url, params, methods );
+            var resource = $resource(url, params, methods);
 
-            resource.prototype.$save = function() {
-                if ( !this.id ) {
+            resource.prototype.$save = function () {
+                if (!this.id) {
                     return this.$create();
                 } else {
                     return this.$update();

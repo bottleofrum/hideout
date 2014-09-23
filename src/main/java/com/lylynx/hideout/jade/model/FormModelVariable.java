@@ -27,7 +27,7 @@ public class FormModelVariable {
     }
 
     public boolean hasErrors(String formName) {
-        if(!hasBindingResult(formName)) {
+        if (!hasBindingResult(formName)) {
             return false;
         }
 
@@ -36,7 +36,7 @@ public class FormModelVariable {
     }
 
     public boolean hasErrors(String formName, String fieldName) {
-        if(!hasBindingResult(formName)) {
+        if (!hasBindingResult(formName)) {
             return false;
         }
 
@@ -46,7 +46,7 @@ public class FormModelVariable {
 
     public Object value(String formName, String path) {
         final Object form = model.get(formName);
-        if(null == form) {
+        if (null == form) {
             return null;
         }
 
@@ -55,7 +55,7 @@ public class FormModelVariable {
 
         for (String relativePath : splitPath) {
             value = getValueForRelativePath(value, relativePath);
-            if(null == value) {
+            if (null == value) {
                 break;
             }
         }
@@ -66,12 +66,12 @@ public class FormModelVariable {
 
     public List<String> errors(String formName, String fieldPath) {
         final BindingResult bindingResult = getBindingResult(formName);
-        if(null == bindingResult) {
+        if (null == bindingResult) {
             return Collections.emptyList();
         }
 
         final List<FieldError> fieldErrors = bindingResult.getFieldErrors(fieldPath);
-        if(null == fieldErrors) {
+        if (null == fieldErrors) {
             return Collections.emptyList();
         }
 
@@ -84,7 +84,7 @@ public class FormModelVariable {
     }
 
     private Object getValueForRelativePath(final Object value, final String relativePath) {
-        String getterName = "get" + relativePath.substring(0,1).toUpperCase()+relativePath.substring(1);
+        String getterName = "get" + relativePath.substring(0, 1).toUpperCase() + relativePath.substring(1);
         try {
             final Method getter = value.getClass().getMethod(getterName, null);
             return getter.invoke(value, null);
@@ -98,11 +98,11 @@ public class FormModelVariable {
     }
 
     private BindingResult getBindingResult(final String formName) {
-        return (BindingResult) model.get(BindingResult.MODEL_KEY_PREFIX+formName);
+        return (BindingResult) model.get(BindingResult.MODEL_KEY_PREFIX + formName);
     }
 
     private boolean hasBindingResult(final String formName) {
-        return model.containsKey(BindingResult.MODEL_KEY_PREFIX+formName);
+        return model.containsKey(BindingResult.MODEL_KEY_PREFIX + formName);
     }
 
 }

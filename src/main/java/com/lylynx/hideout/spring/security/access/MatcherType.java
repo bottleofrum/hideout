@@ -7,5 +7,5 @@ package com.lylynx.hideout.spring.security.access;
  * Time: 23:12
  */
 public enum MatcherType {
-    ANT,ANY,REGEX,EL,IP
+    ANT, ANY, REGEX, EL, IP
 }

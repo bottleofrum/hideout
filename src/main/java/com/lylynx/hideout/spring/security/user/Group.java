@@ -29,8 +29,8 @@ public class Group {
 
     @JsonCreator
     public Group(@JsonProperty("id") final String id, @JsonProperty("name") final String name,
-            @JsonProperty("authorities") @JsonDeserialize(contentAs = HideoutGrantedAuthority.class) final
-            Collection<GrantedAuthority> authorities) {
+                 @JsonProperty("authorities") @JsonDeserialize(contentAs = HideoutGrantedAuthority.class) final
+                 Collection<GrantedAuthority> authorities) {
         this.id = id;
         this.name = name;
         this.authorities = authorities;

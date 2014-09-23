@@ -23,7 +23,7 @@ import javax.validation.groups.Default;
 
 @Controller
 @RequestMapping("/r/security/account")
-public class AccountController extends CrudController<Account>{
+public class AccountController extends CrudController<Account> {
 
     private final PasswordEncoder passwordEncoder;
 
@@ -34,7 +34,7 @@ public class AccountController extends CrudController<Account>{
 
     @RequestMapping(value = "", produces = Constants.MIME_TYPE_JSON, method = RequestMethod.POST,
             consumes = Constants.MIME_TYPE_JSON)
-    public ResponseEntity create(@Validated(value = {CreateGroup.class, Default.class}) @RequestBody AccountDTO entity){
+    public ResponseEntity create(@Validated(value = {CreateGroup.class, Default.class}) @RequestBody AccountDTO entity) {
 
         entity.setPassword(passwordEncoder.encode(entity.getPassword()));
 

@@ -36,12 +36,12 @@ public class ScriptRunner {
         final List<String> files =
                 IOUtils.readLines(ScriptRunner.class.getClassLoader().getResourceAsStream(HIDEOUT_DB_PATH), Charsets.UTF_8.toString());
         for (String file : files) {
-            try (InputStream is = ScriptRunner.class.getClassLoader().getResourceAsStream(HIDEOUT_DB_PATH+file)) {
+            try (InputStream is = ScriptRunner.class.getClassLoader().getResourceAsStream(HIDEOUT_DB_PATH + file)) {
                 final byte[] fileAsBytes = IOUtils.toByteArray(is);
                 final String checksum = DigestUtils.md5DigestAsHex(fileAsBytes);
                 final Script script = scriptRunnerRepository.findByChecksum(checksum);
-                if(null == script) {
-                    System.out.println("Running "+ file);
+                if (null == script) {
+                    System.out.println("Running " + file);
                     final DB db = mongoDbFactory.getDb();
                     String host = getHost(db);
                     int port = getPort(db);

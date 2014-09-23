@@ -8,7 +8,7 @@ import org.springframework.expression.Expression;
  * Date: 24.07.14
  * Time: 00:45
  */
-public class HideoutWebExpressionConfigAttribute extends WebExpressionConfigAttribute{
+public class HideoutWebExpressionConfigAttribute extends WebExpressionConfigAttribute {
     public HideoutWebExpressionConfigAttribute(final Expression authorizeExpression) {
         super(authorizeExpression);
     }

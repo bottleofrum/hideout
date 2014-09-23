@@ -13,7 +13,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 public @interface UniqueRoleName {
     String message() default "{com.lylynx.hideout.spring.security.user.validators.UniqueRoleName.message}";
 
-    Class<?>[] groups() default { };
+    Class<?>[] groups() default {};
 
     Class<? extends Payload>[] payload() default {};
 }

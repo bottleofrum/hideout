@@ -5,9 +5,9 @@ public class Constants {
     public static final String MONGO_DATABASE = "hideout";
 
     //MONGO COLLECTIONS
-    public static final String SECURITY_USERS= "security-users";
-    public static final String SECURITY_GROUPS= "security-groups";
-    public static final String SECURITY_ROLES= "security-roles";
+    public static final String SECURITY_USERS = "security-users";
+    public static final String SECURITY_GROUPS = "security-groups";
+    public static final String SECURITY_ROLES = "security-roles";
 
     //GROUPS
     public static final String GROUP_SUPERADMIN = "SUPERADMIN";
