@@ -23,10 +23,10 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
 
     private static final String MESSAGE_SOURCE = "/WEB-INF/i18n/messages";
 
-    private static final String RESOURCES_HANDLER = "/resources/";
-    private static final String RESOURCES_LOCATION = RESOURCES_HANDLER + "**";
-    private static final String ADMIN_RESOURCES_HANDLER = "/admin/resources/";
-    private static final String ADMIN_RESOURCES_LOCATION = ADMIN_RESOURCES_HANDLER + "**";
+    private static final String RESOURCES_LOCATION = "/resources/";
+    private static final String RESOURCES_HANDLER = RESOURCES_LOCATION + "**";
+    private static final String ADMIN_RESOURCES_LOCATION = "/admin/resources/";
+    private static final String ADMIN_RESOURCES_HANDLER = ADMIN_RESOURCES_LOCATION + "**";
 
     @Override
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {
