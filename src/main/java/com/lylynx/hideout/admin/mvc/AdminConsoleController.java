@@ -1,16 +1,17 @@
 package com.lylynx.hideout.admin.mvc;
 
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.AbstractController;
 
-@Controller
-public class AdminConsoleController {
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-    @RequestMapping(value = "/.console", method = RequestMethod.GET)
-    public String showConsole() {
-        return "admin/console";
+public class AdminConsoleController extends AbstractController {
+
+    @Override
+    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+        return new ModelAndView("admin/console");
     }
-
 }

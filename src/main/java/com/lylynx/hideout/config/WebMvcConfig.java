@@ -1,5 +1,6 @@
 package com.lylynx.hideout.config;
 
+import com.lylynx.hideout.admin.mvc.AdminConsoleController;
 import com.lylynx.hideout.error.ExceptionHandler;
 import com.lylynx.hideout.spring.messages.ExposedReloadableResourceBundleMessageSource;
 import org.springframework.context.MessageSource;
@@ -11,12 +12,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
 class WebMvcConfig extends WebMvcConfigurationSupport {
@@ -27,6 +33,17 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     private static final String RESOURCES_HANDLER = RESOURCES_LOCATION + "**";
     private static final String ADMIN_RESOURCES_LOCATION = "/admin/resources/";
     private static final String ADMIN_RESOURCES_HANDLER = ADMIN_RESOURCES_LOCATION + "**";
+
+    /**
+     * Handles favicon.ico requests assuring no <code>404 Not Found</code> error is returned.
+     */
+    @Controller
+    static class FaviconController {
+        @RequestMapping("favicon.ico")
+        String favicon() {
+            return "forward:/resources/images/favicon.ico";
+        }
+    }
 
     @Override
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {
@@ -58,11 +75,6 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
     }
 
     @Override
-    public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
-        configurer.enable();
-    }
-
-    @Override
     protected void configureMessageConverters(final List<HttpMessageConverter<?>> converters) {
         super.configureMessageConverters(converters);
     }
@@ -72,14 +84,17 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         return new ExceptionHandler();
     }
 
-    /**
-     * Handles favicon.ico requests assuring no <code>404 Not Found</code> error is returned.
-     */
-    @Controller
-    static class FaviconController {
-        @RequestMapping("favicon.ico")
-        String favicon() {
-            return "forward:/resources/images/favicon.ico";
-        }
+    @Bean
+    public HandlerMapping defaultControllerHandlerMapping() {
+        SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();
+        simpleUrlHandlerMapping.setOrder(Integer.MAX_VALUE);
+
+        Map<String, AdminConsoleController> urlMap = new HashMap<>();
+        urlMap.put("/**", new AdminConsoleController());
+
+        simpleUrlHandlerMapping.setUrlMap(urlMap);
+
+        return simpleUrlHandlerMapping;
     }
+
 }
