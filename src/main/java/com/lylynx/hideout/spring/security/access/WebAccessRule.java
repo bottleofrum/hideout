@@ -1,5 +1,7 @@
 package com.lylynx.hideout.spring.security.access;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 import org.springframework.http.HttpMethod;
@@ -7,6 +9,7 @@ import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.web.access.expression.HideoutWebExpressionConfigAttribute;
 import org.springframework.security.web.util.matcher.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,11 +22,21 @@ import java.util.List;
  */
 @Document(collection = "security-web-access")
 public class WebAccessRule implements Comparable<WebAccessRule>{
+
     private String id;
+
+    @NotNull
     private MatcherType type;
+
+    @Indexed(unique = true)
     private String path;
+
+    @NotEmpty
     private String access;
+
+    @NotNull
     private HttpMethod httpMethod;
+
     private int order;
 
     public String getId() {
