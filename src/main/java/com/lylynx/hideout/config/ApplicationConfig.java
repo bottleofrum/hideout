@@ -6,12 +6,14 @@ import com.lylynx.hideout.admin.mvc.error.ErrorsBuilder;
 import com.lylynx.hideout.apps.security.AccountController;
 import com.lylynx.hideout.apps.security.GroupController;
 import com.lylynx.hideout.apps.security.RoleController;
+import com.lylynx.hideout.apps.security.WebAccessRuleController;
 import com.lylynx.hideout.db.mongo.script.ScriptRunner;
 import com.lylynx.hideout.db.mongo.script.ScriptRunnerRepository;
 import com.lylynx.hideout.error.CustomErrorController;
 import com.lylynx.hideout.home.HomeController;
 import com.lylynx.hideout.signin.SigninController;
 import com.lylynx.hideout.signup.SignupController;
+import com.lylynx.hideout.spring.security.access.WebAccessRuleRepository;
 import com.lylynx.hideout.spring.security.user.AccountRepository;
 import com.lylynx.hideout.spring.security.user.GroupRepository;
 import com.lylynx.hideout.spring.security.user.RoleRepository;
@@ -69,6 +71,11 @@ class ApplicationConfig {
     @Bean
     public RoleController roleController(ErrorsBuilder errorsBuilder, RoleRepository roleRepository) {
         return new RoleController(errorsBuilder, roleRepository);
+    }
+
+    @Bean
+    public WebAccessRuleController webAccessRuleController(ErrorsBuilder errorsBuilder, WebAccessRuleRepository webAccessRuleRepository) {
+        return new WebAccessRuleController(errorsBuilder, webAccessRuleRepository);
     }
 
     @Bean

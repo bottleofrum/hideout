@@ -8,5 +8,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * Date: 23.07.14
  * Time: 23:21
  */
-public interface WebAccessRuleRepository extends MongoRepository<WebAccesRule, String> {
+public interface WebAccessRuleRepository extends MongoRepository<WebAccessRule, String> {
 }

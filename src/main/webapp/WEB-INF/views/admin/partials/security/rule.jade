@@ -1,0 +1,37 @@
+.col-sm-6
+    h3(ng-if="!editMode") #{i18n['admin.security.webaccessrule.controls.add']}
+    h3(ng-if="editMode") #{i18n['admin.security.webaccessrule.controls.edit']}
+    .row
+        form.form-horizontal(novalidate,name="form",ng-submit="save()")
+            .form-group
+                label.col-sm-4.control-label #{i18n['admin.security.webaccessrule.form.path']}
+                .col-sm-8
+                    input.form-control(name="path", ng-model="model.path", server-error)
+                    div(errors-printer="path")
+            .form-group
+                label.col-sm-4.control-label #{i18n['admin.security.webaccessrule.form.type']}
+                .col-sm-8
+                    select.form-control(name="type", ng-model="model.type", server-error, ng-options="matcher for matcher in matchers")
+                    div(errors-printer="type")
+            .form-group
+                label.col-sm-4.control-label #{i18n['admin.security.webaccessrule.form.access']}
+                .col-sm-8
+                    input.form-control(name="access", ng-model="model.access", server-error)
+                    div(errors-printer="access")
+            .form-group
+                label.col-sm-4.control-label #{i18n['admin.security.webaccessrule.form.httpmethod']}
+                .col-sm-8
+                    select.form-control(name="httpMethod", ng-model="model.httpMethod", server-error, ng-options="method for method in methods")
+                    div(errors-printer="httpMethod")
+            .form-group
+                label.col-sm-4.control-label #{i18n['admin.security.webaccessrule.form.order']}
+                .col-sm-8
+                    input.form-control(name="order", ng-model="model.order", server-error)
+                    div(errors-printer="order")
+            .form-group
+                .col-sm-offset-4.col-sm-8
+                    .pull-right
+                        button.btn.btn-default(type="button", ui-sref="security") Cancel
+                        span &nbsp;
+                        button.btn.btn-primary(type="submit") Submit
+                    .clearfix

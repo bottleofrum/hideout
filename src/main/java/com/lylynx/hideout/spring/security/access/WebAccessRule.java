@@ -18,12 +18,13 @@ import java.util.List;
  * Time: 23:14
  */
 @Document(collection = "security-web-access")
-public class WebAccesRule {
+public class WebAccessRule implements Comparable<WebAccessRule>{
     private String id;
     private MatcherType type;
     private String path;
     private String access;
     private HttpMethod httpMethod;
+    private int order;
 
     public String getId() {
         return id;
@@ -65,6 +66,14 @@ public class WebAccesRule {
         this.httpMethod = httpMethod;
     }
 
+    public int getOrder() {
+        return order;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
+    }
+
     public RequestMatcher requestMatcher() {
         switch (type) {
             case ANT:
@@ -85,5 +94,10 @@ public class WebAccesRule {
         SpelExpressionParser spelExpressionParser = new SpelExpressionParser();
         configAttributes.add(new HideoutWebExpressionConfigAttribute(spelExpressionParser.parseExpression(access)));
         return configAttributes;
+    }
+
+    @Override
+    public int compareTo(WebAccessRule rule) {
+        return Integer.valueOf(order).compareTo(Integer.valueOf(rule.order));
     }
 }

@@ -1,10 +1,11 @@
 function init(host, port, database) {
 
-    function WebAccesRule(type, path, access) {
+    function WebAccesRule(type, path, access, order) {
         this.path = path;
         this.access = access;
         this.type = type;
         this.httpMethod = 'GET';
+        this.order = order;
     }
 
     function Group(name, authorities) {
@@ -36,15 +37,15 @@ function init(host, port, database) {
     access = db.getCollection('security-web-access');
 
 
-    access.insert(new WebAccesRule('ANT', '/favicon.ico', 'permitAll'));
-    access.insert(new WebAccesRule('ANT', '/resources/**', 'permitAll'));
-    access.insert(new WebAccesRule('ANT', '/', 'permitAll'));
-    access.insert(new WebAccesRule('ANT', '/signup*', 'permitAll'));
-    access.insert(new WebAccesRule('ANT', '/signin*', 'permitAll'));
-    access.insert(new WebAccesRule('ANT', '/generalError', 'permitAll'));
-    access.insert(new WebAccesRule('ANT', '/.console/**', 'hasRole(\'SUPERADMIN\')'));
-    access.insert(new WebAccesRule('ANT', '/r/security/**', 'hasRole(\'SUPERADMIN\')'));
-    access.insert(new WebAccesRule('ANY', '[ANY]', 'authenticated'));
+    access.insert(new WebAccesRule('ANT', '/favicon.ico', 'permitAll', 1));
+    access.insert(new WebAccesRule('ANT', '/resources/**', 'permitAll', 2));
+    access.insert(new WebAccesRule('ANT', '/', 'permitAll', 3));
+    access.insert(new WebAccesRule('ANT', '/signup*', 'permitAll', 4));
+    access.insert(new WebAccesRule('ANT', '/signin*', 'permitAll', 5));
+    access.insert(new WebAccesRule('ANT', '/generalError', 'permitAll', 6));
+    access.insert(new WebAccesRule('ANT', '/.console/**', 'hasRole(\'SUPERADMIN\')', 7));
+    access.insert(new WebAccesRule('ANT', '/r/security/**', 'hasRole(\'SUPERADMIN\')', 8));
+    access.insert(new WebAccesRule('ANY', '[ANY]', 'authenticated', 999999));
 
     role = db.getCollection('security-roles');
 

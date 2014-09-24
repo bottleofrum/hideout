@@ -20,7 +20,7 @@
         <org.thymeleaf.extras.springsecurity3-version>2.1.1.RELEASE</org.thymeleaf.extras.springsecurity3-version>
         <spring.version>4.0.5.RELEASE</spring.version>
         <spring.security.version>3.2.4.RELEASE</spring.security.version>
-        <spring.mongo.version>1.5.0.RELEASE</spring.mongo.version>
+        <spring.mongo.version>1.6.0.RELEASE</spring.mongo.version>
         <jade.version>0.4.0</jade.version>
 
         <mongo.host>localhost</mongo.host>

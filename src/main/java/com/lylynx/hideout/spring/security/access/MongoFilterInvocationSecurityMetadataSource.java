@@ -5,6 +5,7 @@ import org.springframework.security.web.FilterInvocation;
 import org.springframework.security.web.access.intercept.FilterInvocationSecurityMetadataSource;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,10 +27,11 @@ public class MongoFilterInvocationSecurityMetadataSource implements FilterInvoca
 
         FilterInvocation fi = (FilterInvocation) object;
 
-        final List<WebAccesRule> webAccesRules = webAccessRuleRepository.findAll();
-        for (WebAccesRule webAccesRule : webAccesRules) {
-            if (webAccesRule.requestMatcher().matches(fi.getRequest())) {
-                return webAccesRule.configAttributes();
+        final List<WebAccessRule> webAccessRules = webAccessRuleRepository.findAll();
+        Collections.sort(webAccessRules);
+        for (WebAccessRule webAccessRule : webAccessRules) {
+            if (webAccessRule.requestMatcher().matches(fi.getRequest())) {
+                return webAccessRule.configAttributes();
             }
         }
 

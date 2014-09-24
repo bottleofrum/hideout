@@ -32,6 +32,10 @@ body {
     width: 40px;
 }
 
+.h-clickable {
+    cursor: pointer;
+}
+
 /*MULTISELECT*/
 
 .h-multiselect-pane {
